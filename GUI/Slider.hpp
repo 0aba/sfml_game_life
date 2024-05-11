@@ -19,9 +19,9 @@ namespace my_gui
 
         sf::Font font;
         sf::Color textColor;
-        sf::Text textMin;
-        sf::Text textMax;
-        sf::Text textPopup;
+        sf::Text textMin; //todo! заменить в будующим на MultilineTextArea ??????
+        sf::Text textMax; //todo! заменить в будующим на MultilineTextArea ??????
+        sf::Text textPopup; //todo! заменить в будующим на MultilineTextArea ??????
 
         float hOffsetPercentageViewPopup = .5f;
 

@@ -14,7 +14,7 @@ namespace my_gui
 
         sf::Color textColor;
         sf::Font font;
-        sf::Text text;
+        sf::Text text; //todo! заменить в будующим на MultilineTextArea !!!!!!
 
         void (*clickEvent)(sf::RenderWindow* window, Widget* widget){};
 

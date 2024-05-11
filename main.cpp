@@ -56,7 +56,21 @@ int main()
                     10
                     ); //todo! test
 
-    my_gui::ContextMenuElement contextMenuElement();
+    my_gui::ContextMenuElement contextMenuElement(window,
+                                                  sf::Vector2f(100, 50),
+                                                  sf::Vector2f(300, 50),
+                                                  nullptr,
+                                                  nullptr,
+                                                  nullptr,
+                                                  "element",
+                                                  *([](sf::RenderWindow* window, my_gui::Widget* widget)
+                                                  {
+                                                      std::cout << "click on elemet" << std::endl;
+                                                  }),
+                                                  sf::Color(255, 219, 200),
+                                                  sf::Color(110, 110, 110, 105),
+                                                  sf::Color(151, 197, 139, 64),
+                                                  sf::Color(98, 97, 160, 128));
 
     sf::Vector2i mousePosition;
 
@@ -97,11 +111,13 @@ int main()
 
             button.checkOnEvent(event); //todo! test
             hSlider.checkOnEvent(event); //todo! test
+            contextMenuElement.checkOnEvent(event); //todo! test
         }
 
         viewPage->drawOnWindow(window);
         button.draw(window); //todo! test
         hSlider.draw(window); //todo! test
+        contextMenuElement.draw(window); //todo! test
 
         window.display();
 

@@ -17,7 +17,7 @@ namespace my_gui
 
         sf::Font font;
         sf::Color textColor;
-        sf::Text text;
+        sf::Text text; //todo! заменить в будующим на MultilineTextArea !!!!!!
 
         TypeAction currentAction = TypeAction::Idle;
         sf::Color idleColor;

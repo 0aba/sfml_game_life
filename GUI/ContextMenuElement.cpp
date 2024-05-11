@@ -36,21 +36,24 @@ my_gui::ContextMenuElement::ContextMenuElement(sf::RenderWindow &window,
 
 void my_gui::ContextMenuElement::loadBackgroundTexture(char *path)
 {
-    if(!this->backgroundTexture.loadFromFile(path)) { return; }
+    if(path != nullptr && this->backgroundTexture.loadFromFile(path)) { }
+    else if (!this->backgroundTexture.loadFromFile("resources_GUI\\context_menu_element.png")) { return; }
 
     background.setTexture(this->backgroundTexture);
 }
 
 void my_gui::ContextMenuElement::loadImage(char *path)
 {
-    if(!this->imageTexture.loadFromFile(path)) { return; }
+    if(path != nullptr && this->imageTexture.loadFromFile(path)) { }
+    else if (!this->imageTexture.loadFromFile("resources_GUI\\none_image.png")) { return; }
 
     this->image.setTexture(imageTexture);
 }
 
 void my_gui::ContextMenuElement::loadFont(const char *pathFont)
 {
-    if(!this->font.loadFromFile(pathFont)) { return; }
+    if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
+    else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
 
     this->text.setFont(this->font);
 }
@@ -77,13 +80,14 @@ void my_gui::ContextMenuElement::setActiveColor(sf::Color activeColor) { this->a
 void my_gui::ContextMenuElement::setSize(sf::Vector2f size)
 {
     this->size = size;
-    this->background.setScale( this->getSize().x / this->backgroundTexture.getSize().x,
-                               this->getSize().y / this->backgroundTexture.getSize().y);
+    this->background.setScale(this->getSize().x / this->backgroundTexture.getSize().x,
+                              this->getSize().y / this->backgroundTexture.getSize().y);
 
+    //todo! поправить scale пропорции для картинки
     this->image.setScale( this->getSize().x * .2f / this->imageTexture.getSize().x,
                           this->getSize().y / this->imageTexture.getSize().y);
 
-    this->text.setCharacterSize(std::ceil(this->backgroundTexture.getSize().y * this->background.getScale().y * .5f));
+    this->text.setCharacterSize(std::ceil(this->backgroundTexture.getSize().y * this->background.getScale().y * .5f * .8f));
 }
 
 void my_gui::ContextMenuElement::setPosition(sf::Vector2f position)
@@ -95,9 +99,7 @@ void my_gui::ContextMenuElement::setPosition(sf::Vector2f position)
     this->image.setPosition(this->position);
 
     this->text.setPosition(this->background.getPosition().x +
-                           this->getSize().x * .5f -
-                           (this->text.getString().getSize() * this->text.getCharacterSize() * .25f) +
-                           this->backgroundTexture.getSize().x * this->background.getScale().x * .21f,
+                           this->backgroundTexture.getSize().x * this->background.getScale().x * .275f,
                            this->background.getPosition().y +
                            this->getSize().y * .5f -
                            this->text.getCharacterSize() * .5f
