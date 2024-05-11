@@ -1,0 +1,3 @@
+C:/Users/aba/Desktop/game_life/cmake-build-debug/CMakeFiles/game_life.dir
+C:/Users/aba/Desktop/game_life/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/aba/Desktop/game_life/cmake-build-debug/CMakeFiles/rebuild_cache.dir

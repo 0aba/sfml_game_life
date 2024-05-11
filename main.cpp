@@ -1,0 +1,109 @@
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "./pages/menu_page.hpp"
+#include "./pages/rules_page.hpp"
+#include "./pages/settings_page.hpp"
+#include "./pages/game_page.hpp."
+
+#include "GUI/Button.hpp"
+#include "GUI/HSlider.hpp"
+#include "GUI/Widget.hpp"
+
+
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(800, 600), "game life");
+
+    sf::Font font; //todo! test
+    font.loadFromFile(FRONT_TEXT_PATH); //todo! test
+
+
+    my_gui::Button button
+                    (window,
+                     sf::Vector2f(200, 100),
+                   sf::Vector2f(50, 50),
+                   "resources_GUI\\button_background.png",
+                   "resources_GUI\\arial.ttf",
+                   "button",
+                   *([](sf::RenderWindow* window, my_gui::Widget* widget)
+                   {
+                       ((my_gui::Button*)widget)->setViewState(false);
+                   }),
+                   sf::Color(255, 219, 200),
+                   sf::Color(110, 110, 110, 105),
+                   sf::Color(151, 197, 139, 64),
+                   sf::Color(98, 97, 160, 128)
+            ); //todo! test
+
+    my_gui::HSlider hSlider(window,
+                    sf::Vector2f(250, 25),
+                    sf::Vector2f(100, 200),
+                    "resources_GUI\\arial.ttf",
+                    "resources_GUI\\slider_line.png",
+                    "resources_GUI\\slider_pointer.png",
+                    "resources_GUI\\slider_popup.png",
+                    .5f,
+                    *([](sf::RenderWindow* window, my_gui::Widget* widget)
+                    {
+                        std::cout << "val: " << ((my_gui::HSlider*)widget)->getValuesPointer() << std::endl;
+                    }),
+                    sf::Color(0, 255, 0),
+                    sf::Color(110, 110, 110, 105),
+                    sf::Color(151, 197, 139, 64),
+                    sf::Color(98, 97, 160, 128),
+                    0,
+                    10
+                    ); //todo! test
+
+    sf::Vector2i mousePosition;
+
+    TypePage pageViewChange = TypePage::Menu;
+    Page* viewPage;
+    MenuPage menuPage(pageViewChange);
+    GamePage gamePage(pageViewChange);
+    SettingsPage settingsPage(pageViewChange);
+    RulesPage rulesPage(pageViewChange);
+
+    sf::RectangleShape r;
+
+    while (window.isOpen())
+    {
+        switch (pageViewChange)
+        {
+            case Menu: viewPage = &menuPage; break;
+            case Game: viewPage = &gamePage; break;
+            case Settings: viewPage = &settingsPage; break;
+            case Rules: viewPage = &rulesPage; break;
+            case Exit: return EXIT_SUCCESS;
+        }
+
+        sf::Event event;
+        
+        mousePosition = sf::Mouse::getPosition(window);
+
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) { window.close(); }
+            else if (event.type == sf::Event::Resized)
+            {
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
+            }
+
+            viewPage->checkOnEvent(event, mousePosition);
+
+            button.checkOnEvent(event); //todo! test
+            hSlider.checkOnEvent(event); //todo! test
+        }
+
+        viewPage->drawOnWindow(window);
+        button.draw(window); //todo! test
+        hSlider.draw(window); //todo! test
+
+        window.display();
+
+        viewPage->close(window);
+    }
+
+    return EXIT_SUCCESS;
+}

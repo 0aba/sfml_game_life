@@ -1,0 +1,22 @@
+# ninja log v5
+41	5448	7371383861888022	CMakeFiles/game_life.dir/main.cpp.obj	6acaf5545b2a91f4
+5188	9430	7371383902243083	CMakeFiles/game_life.dir/pages/menu_page.cpp.obj	346d278232b96673
+9431	11236	7371383920162434	game_life.exe	ea5ed1e2c81158f9
+8	5233	7371383858491018	CMakeFiles/game_life.dir/pages/settings_page.cpp.obj	8b3f1255de09566b
+38	1244	7363610725287086	CMakeFiles/game_life.dir/game_logic/settings.cpp.obj	75ae2464698c3094
+15	2642	7364548677737290	CMakeFiles/game_life.dir/game_logic/game_logic.cpp.obj	d0cacbd1ee379abb
+34	5216	7371383857884120	CMakeFiles/game_life.dir/pages/game_page.cpp.obj	1564facbf2942d6a
+5084	9245	7371383900386695	CMakeFiles/game_life.dir/pages/rules_page.cpp.obj	d4951b7f1227b040
+5207	9054	7371383898163446	CMakeFiles/game_life.dir/GUI/VScrollbar.cpp.obj	e533b7cf20d423e
+18	2187	7367079330318106	CMakeFiles/game_life.dir/UI/button.cpp.obj	fb4259ef95ab9f15
+1	408	7371385805487258	build.ninja	5df1b1a062e0c9f
+33	3675	7370572535815618	CMakeFiles/game_life.dir/GUI/Widget.cpp.obj	594a6cdb3402f561
+11	2699	7370692673494919	CMakeFiles/game_life.dir/GUI/Button.cpp.obj	db1aece2ac5fd460
+63	3937	7370572538468761	CMakeFiles/game_life.dir/GUI/Slider.cpp.obj	953c2ea0168dc739
+5216	9046	7371383897913309	CMakeFiles/game_life.dir/GUI/VSlider.cpp.obj	2d877a0c0fefd784
+87	4559	7370572544620618	CMakeFiles/game_life.dir/GUI/HSlider.cpp.obj	deb9c99ac696e7f
+55	4191	7371376378699088	CMakeFiles/game_life.dir/GUI/ContextMenuElement.cpp.obj	67588808ef8241d8
+25	5081	7371383853560191	CMakeFiles/game_life.dir/GUI/Scrollbar.cpp.obj	610a9d6f17c452e0
+13	5187	7371383853807536	CMakeFiles/game_life.dir/GUI/MultilineTextArea.cpp.obj	a1514a2e41d50e31
+18	5207	7371383853909518	CMakeFiles/game_life.dir/GUI/HScrollbar.cpp.obj	39ef8f09b94a8b30
+5233	8938	7371383897341729	CMakeFiles/game_life.dir/GUI/ContextMenu.cpp.obj	b91336b37f8a8676
