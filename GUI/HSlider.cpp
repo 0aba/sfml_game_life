@@ -39,16 +39,16 @@ my_gui::HSlider::HSlider(sf::RenderWindow &window,
 void my_gui::HSlider::setSize(sf::Vector2f size)
 {
     this->size = size;
-    this->sliderLine.setScale( this->getSize().x / this->textureSliderLine.getSize().x,
-                               this->getSize().y / this->textureSliderLine.getSize().y);
+    this->sliderLine.setScale(this->getSize().x / this->textureSliderLine.getSize().x,
+                              this->getSize().y / this->textureSliderLine.getSize().y);
 
     this->textMin.setCharacterSize(std::ceil(this->textureSliderLine.getSize().y * this->sliderLine.getScale().y * .75f));
     this->textMax.setCharacterSize(this->textMin.getCharacterSize());
 
     this->textPopup.setCharacterSize(this->textMin.getCharacterSize());
 
-    this->pointer.setScale(this->getSize().y / this->textureSliderLine.getSize().y * .75f,
-                           this->getSize().y / this->textureSliderLine.getSize().y * 1.5f);
+    this->pointer.setScale(this->pointer.getScale().x / this->texturePointer.getSize().x * this->getSize().y * .5f,
+                           this->pointer.getScale().y / this->texturePointer.getSize().y * this->getSize().y * 1.5f);
 
 
     int minValueSize = std::to_string(this->getValueMin()).size();
@@ -56,7 +56,7 @@ void my_gui::HSlider::setSize(sf::Vector2f size)
 
     this->popupPointer.setScale(this->textPopup.getCharacterSize() * .75f *
                                 (minValueSize > maxValueSize ? minValueSize : maxValueSize) / this->texturePopupPointer.getSize().y,
-                                this->size.y / this->textureSliderLine.getSize().y * .5f);
+                                this->popupPointer.getScale().y / this->texturePopupPointer.getSize().y * this->textPopup.getCharacterSize() * 1.5f);
     this->setPosition(this->position);
 }
 
@@ -80,7 +80,7 @@ void my_gui::HSlider::setPosition(sf::Vector2f position)
                               std::abs(this->getValueMin() - this->getValueMax()) -
                               this->texturePointer.getSize().x * this->pointer.getScale().x * .5f,
                               this->getPosition().y -
-                              this->texturePointer.getSize().y * this->pointer.getScale().y * .25f);
+                              this->getSize().y * .25f);
 
     this->popupPointer.setPosition(this->pointer.getPosition().x -
                                    this->texturePopupPointer.getSize().x * this->popupPointer.getScale().x * this->getHOffsetViewPopup() +

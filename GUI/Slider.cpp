@@ -33,9 +33,11 @@ my_gui::Slider::Slider(char *pathFont,
     this->setValuePointer(this->minValue);
 }
 
-void my_gui::Slider::loadFont(const char* pathFont)
+void my_gui::Slider::loadFont(char* pathFont)
 {
-    this->font.loadFromFile(pathFont);
+    if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
+    else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
+
     this->textMin.setFont(font);
     this->textMax.setFont(font);
     this->textPopup.setFont(font);
@@ -57,23 +59,26 @@ void my_gui::Slider::setActiveColor(sf::Color activeColor) { this->activeColor =
 
 void my_gui::Slider::setChangeEvent(void (*changeEvent)(sf::RenderWindow* window, Widget* widget))  { this->changeEvent = changeEvent; }
 
-void my_gui::Slider::loadTexturePopupPointer(const char* path)
+void my_gui::Slider::loadTexturePopupPointer(char* path)
 {
-    if(!this->texturePopupPointer.loadFromFile(path)) { return; }
+    if(path != nullptr && this->texturePopupPointer.loadFromFile(path)) { }
+    else if (!this->texturePopupPointer.loadFromFile("resources_GUI\\slider_popup.png")) { return; }
 
     popupPointer.setTexture(this->texturePopupPointer);
 }
 
-void my_gui::Slider::loadTexturePointer(const char* path)
+void my_gui::Slider::loadTexturePointer(char* path)
 {
-    if(!this->texturePointer.loadFromFile(path)) { return; }
+    if(path != nullptr && this->texturePointer.loadFromFile(path)) { }
+    else if (!this->texturePointer.loadFromFile("resources_GUI\\slider_pointer.png")) { return; }
 
     pointer.setTexture(this->texturePointer);
 }
 
-void my_gui::Slider::loadTextureSliderLine(const char* path)
+void my_gui::Slider::loadTextureSliderLine(char* path)
 {
-    if(!this->textureSliderLine.loadFromFile(path)) { return; }
+    if(path != nullptr && this->textureSliderLine.loadFromFile(path)) { }
+    else if (!this->textureSliderLine.loadFromFile("resources_GUI\\slider_line.png")) { return; }
 
     sliderLine.setTexture(this->textureSliderLine);
 }

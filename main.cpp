@@ -1,13 +1,14 @@
-#include <iostream>
+#include <iostream> // todo! del
 #include <SFML/Graphics.hpp>
-#include "./pages/menu_page.hpp"
-#include "./pages/rules_page.hpp"
-#include "./pages/settings_page.hpp"
-#include "./pages/game_page.hpp."
+#include "./pages/menu_page.hpp" // todo! change
+#include "./pages/rules_page.hpp" // todo! change
+#include "./pages/settings_page.hpp" // todo! change
+#include "./pages/game_page.hpp." // todo! change
 
-#include "GUI/Button.hpp"
-#include "GUI/HSlider.hpp"
-#include "GUI/Widget.hpp"
+#include "GUI/Button.hpp" // todo! test
+#include "GUI/HSlider.hpp"  // todo! test
+#include "GUI/ContextMenuElement.hpp"  // todo! test
+#include "GUI/Widget.hpp"  // todo! test
 
 
 int main()
@@ -20,10 +21,10 @@ int main()
 
     my_gui::Button button
                     (window,
-                     sf::Vector2f(200, 100),
+                     sf::Vector2f(100, 50),
                    sf::Vector2f(50, 50),
-                   "resources_GUI\\button_background.png",
-                   "resources_GUI\\arial.ttf",
+                   nullptr,
+                   nullptr,
                    "button",
                    *([](sf::RenderWindow* window, my_gui::Widget* widget)
                    {
@@ -38,10 +39,10 @@ int main()
     my_gui::HSlider hSlider(window,
                     sf::Vector2f(250, 25),
                     sf::Vector2f(100, 200),
-                    "resources_GUI\\arial.ttf",
-                    "resources_GUI\\slider_line.png",
-                    "resources_GUI\\slider_pointer.png",
-                    "resources_GUI\\slider_popup.png",
+                    nullptr,
+                    nullptr,
+                    nullptr,
+                    nullptr,
                     .5f,
                     *([](sf::RenderWindow* window, my_gui::Widget* widget)
                     {
@@ -54,6 +55,8 @@ int main()
                     0,
                     10
                     ); //todo! test
+
+    my_gui::ContextMenuElement contextMenuElement();
 
     sf::Vector2i mousePosition;
 

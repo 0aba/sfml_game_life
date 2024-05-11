@@ -51,7 +51,7 @@ namespace my_gui
                int maxValue
         );
 
-        void loadFont(const char* pathFont);
+        void loadFont(char* pathFont);
         void setTextColor(sf::Color textColor);
 
         void setIdleColor(sf::Color idleColor);
@@ -60,9 +60,9 @@ namespace my_gui
 
         void setChangeEvent(void (*changeEvent)(sf::RenderWindow* window, Widget* widget));
 
-        void loadTexturePopupPointer(const char* path);
-        void loadTexturePointer(const char* path);
-        void loadTextureSliderLine(const char* path);
+        void loadTexturePopupPointer(char* path);
+        void loadTexturePointer(char* path);
+        void loadTextureSliderLine(char* path);
 
         void setHOffsetViewPopup(float offset);
         float getHOffsetViewPopup() const;

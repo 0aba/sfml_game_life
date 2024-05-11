@@ -36,7 +36,7 @@ namespace my_gui
                sf::Color activeColor
         );
 
-        void loadFont(const char* pathFont);
+        void loadFont(char* pathFont);
         void setTextColor(sf::Color textColor);
         void setText(sf::String text);
         sf::String getText();
@@ -47,7 +47,7 @@ namespace my_gui
 
         void setClickEvent(void (*clickEvent)(sf::RenderWindow* window, Widget* widget));
 
-        void loadBackgroundTexture(const char* path);
+        void loadBackgroundTexture(char* path);
 
         void setSize(sf::Vector2f size) override;
 

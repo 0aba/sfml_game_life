@@ -31,9 +31,11 @@ my_gui::Button::Button(sf::RenderWindow& window,
     ((Button*) this)->setPosition(position);
 }
 
-void my_gui::Button::loadFont(const char* pathFont)
+void my_gui::Button::loadFont(char* pathFont)
 {
-    this->font.loadFromFile(pathFont);
+    if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
+    else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
+
     this->text.setFont(this->font);
 }
 
@@ -60,9 +62,10 @@ void my_gui::Button::setActiveColor(sf::Color activeColor) { this->activeColor =
 
 void my_gui::Button::setClickEvent(void (*clickEvent)(sf::RenderWindow* window, Widget* widget)) { this->clickEvent = clickEvent; }
 
-void my_gui::Button::loadBackgroundTexture(const char *path)
+void my_gui::Button::loadBackgroundTexture(char *path)
 {
-    if(!this->backgroundTexture.loadFromFile(path)) { return; }
+    if(path != nullptr && this->backgroundTexture.loadFromFile(path)) { }
+    else if (!this->backgroundTexture.loadFromFile("resources_GUI\\button_background.png")) { return; }
 
     background.setTexture(this->backgroundTexture);
 }

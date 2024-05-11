@@ -13,7 +13,7 @@ enum TypePage
     Exit     = 4
 };
 
-class Page
+class Page // todo! change logic page
 {
 protected:
     TypePage& pageView;
