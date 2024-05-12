@@ -7,6 +7,7 @@
 
 #include "GUI/Button.hpp" // todo! test
 #include "GUI/HSlider.hpp"  // todo! test
+#include "GUI/ContextMenu.hpp"  // todo! test
 #include "GUI/ContextMenuElement.hpp"  // todo! test
 #include "GUI/Widget.hpp"  // todo! test
 
@@ -70,7 +71,25 @@ int main()
                                                   sf::Color(255, 219, 200),
                                                   sf::Color(110, 110, 110, 105),
                                                   sf::Color(151, 197, 139, 64),
-                                                  sf::Color(98, 97, 160, 128));
+                                                  sf::Color(98, 97, 160, 128)
+                                                  ); // todo!
+
+
+    my_gui::ContextMenu contextMenu (window,
+                                     sf::Vector2f(100, 300),
+                                     sf::Vector2f(100, 50),
+                                     nullptr,
+                                     10
+                                     );
+
+    std::cout << contextMenu.createDefaultElement();
+    contextMenu.addElement(&contextMenuElement);
+    std::cout << contextMenu.createDefaultElement();
+    std::cout << contextMenu.createDefaultElement();
+    std::cout << contextMenu.createDefaultElement();
+
+    contextMenu.setMaxAmountElements(2);
+    contextMenu.delElementAt(1);
 
     sf::Vector2i mousePosition;
 
@@ -80,8 +99,6 @@ int main()
     GamePage gamePage(pageViewChange);
     SettingsPage settingsPage(pageViewChange);
     RulesPage rulesPage(pageViewChange);
-
-    sf::RectangleShape r;
 
     while (window.isOpen())
     {
@@ -109,20 +126,24 @@ int main()
 
             viewPage->checkOnEvent(event, mousePosition);
 
-            button.checkOnEvent(event); //todo! test
-            hSlider.checkOnEvent(event); //todo! test
-            contextMenuElement.checkOnEvent(event); //todo! test
+            //button.checkOnEvent(event); //todo! test
+            //hSlider.checkOnEvent(event); //todo! test
+            contextMenu.checkOnEvent(event); //todo! test
+            //contextMenu.getElementAt(0)->checkOnEvent(event);
         }
 
         viewPage->drawOnWindow(window);
-        button.draw(window); //todo! test
-        hSlider.draw(window); //todo! test
-        contextMenuElement.draw(window); //todo! test
+        //button.draw(window); //todo! test
+        //hSlider.draw(window); //todo! test
+        contextMenu.draw(window); //todo! test
+        //contextMenu.getElementAt(0)->draw(window);
 
         window.display();
 
         viewPage->close(window);
     }
+
+    contextMenu.freeMemoryWidget(); // todo! test
 
     return EXIT_SUCCESS;
 }

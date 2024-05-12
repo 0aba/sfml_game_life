@@ -73,8 +73,8 @@ void my_gui::Button::loadBackgroundTexture(char *path)
 void my_gui::Button::setSize(sf::Vector2f size)
 {
     this->size = size;
-    this->background.setScale( this->getSize().x / this->backgroundTexture.getSize().x,
-                               this->getSize().y / this->backgroundTexture.getSize().y);
+    this->background.setScale(this->getSize().x / this->backgroundTexture.getSize().x,
+                              this->getSize().y / this->backgroundTexture.getSize().y);
 
     this->text.setCharacterSize(std::ceil(this->backgroundTexture.getSize().y * this->background.getScale().y * .5f));
     this->setPosition(this->getPosition());
@@ -127,3 +127,4 @@ void my_gui::Button::checkOnEvent(sf::Event event)
     }
     else  { this->currentAction = TypeAction::Idle; }
 }
+

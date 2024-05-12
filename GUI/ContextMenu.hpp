@@ -14,13 +14,14 @@ namespace my_gui
 
         unsigned short maxAmountElements;
 #       define EMPTY_ARRAY (-1)
-        unsigned short lastElement = EMPTY_ARRAY;
-        ContextMenuElement** elements;
+        short lastElement = EMPTY_ARRAY;
+        ContextMenuElement** elements = nullptr;
         sf::Vector2f elementSize;
     public:
         ContextMenu(sf::RenderWindow& window,
                     sf::Vector2f size,
                     sf::Vector2f position,
+                    char* pathBackgroundTexture,
                     unsigned short maxAmountElements);
 
         void loadBackgroundTexture(char* path);
@@ -28,10 +29,14 @@ namespace my_gui
         void setMaxAmountElements(unsigned short amount);
         unsigned short getMaxAmountElements() const;
 
+#       define NOT_FOUND_ELEMENT (-1)
+#       define MAX_AMOUNT_ELEMENTS 32767
         unsigned short addElement(ContextMenuElement* element);
         unsigned short createDefaultElement();
         ContextMenuElement* getElementAt(unsigned short index);
         void delElementAt(unsigned short index);
+
+        void freeMemoryWidget();
 
         void setSize(sf::Vector2f size) override;
 

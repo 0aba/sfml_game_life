@@ -83,7 +83,7 @@ void my_gui::ContextMenuElement::setSize(sf::Vector2f size)
     this->background.setScale(this->getSize().x / this->backgroundTexture.getSize().x,
                               this->getSize().y / this->backgroundTexture.getSize().y);
 
-    //todo! поправить scale пропорции для картинки
+    //todo! поправить scale пропорции для картинок
     this->image.setScale( this->getSize().x * .2f / this->imageTexture.getSize().x,
                           this->getSize().y / this->imageTexture.getSize().y);
 
