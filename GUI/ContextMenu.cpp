@@ -4,11 +4,11 @@
 my_gui::ContextMenu::ContextMenu(sf::RenderWindow &window,
                                  sf::Vector2f size,
                                  sf::Vector2f position,
-                                 char* pathBackgroundTexture,
-                                 unsigned short maxAmountElements)
+                                 char* pathBackgroundTexture)
 {
     this->setWindow(window);
-    this->setMaxAmountElements(maxAmountElements);
+    this->lastElement = std::distance(this->elements.begin(), this->elements.end());
+
     this->loadBackgroundTexture(pathBackgroundTexture);
 
     ((ContextMenu*)this)->setSize(size);
@@ -23,49 +23,9 @@ void my_gui::ContextMenu::loadBackgroundTexture(char *path)
     background.setTexture(this->backgroundTexture);
 }
 
-void my_gui::ContextMenu::setMaxAmountElements(unsigned short amount)
+unsigned short my_gui::ContextMenu::createElement()
 {
-    if (elements != nullptr && this->maxAmountElements == amount) { return; }
-    else if (elements == nullptr)
-    {
-        this->maxAmountElements = amount;
-        this->elements = new ContextMenuElement*[maxAmountElements];
-    }
-    else /*(elements != nullptr && this->maxAmountElements != amount)*/
-    {
-        ContextMenuElement** newElementsArray = new my_gui::ContextMenuElement*[amount];
-
-        for (int i = 0; i < amount && i < this->maxAmountElements; ++i) { newElementsArray[i] = elements[i]; }
-
-        delete[] this->elements;
-        if (amount < this->lastElement) { this->lastElement = amount - 1; }
-
-        this->maxAmountElements = amount;
-        this->elements = newElementsArray;
-
-        this->setSize(this->size);
-        this->setPosition(this->position);
-    }
-}
-
-unsigned short my_gui::ContextMenu::getMaxAmountElements() const { return this->maxAmountElements; }
-
-unsigned short my_gui::ContextMenu::addElement(my_gui::ContextMenuElement* element)
-{
-    if (this->lastElement == MAX_AMOUNT_ELEMENTS) { return NOT_FOUND_ELEMENT; }
-
-    this->elements[++this->lastElement] = element;
-
-    this->setSize(this->size);
-    this->setPosition(this->position);
-    return this->lastElement;
-}
-
-unsigned short my_gui::ContextMenu::createDefaultElement()
-{
-    if (this->lastElement == MAX_AMOUNT_ELEMENTS) { return NOT_FOUND_ELEMENT; }
-
-    this->elements[++this->lastElement] = new ContextMenuElement (*this->getWindow(),
+    this->elements.push_front( new ContextMenuElement (*this->getWindow(),
                                           this->elementSize,
                                           sf::Vector2f(300, 50),
                                           nullptr,
@@ -77,27 +37,30 @@ unsigned short my_gui::ContextMenu::createDefaultElement()
                                           sf::Color(110, 110, 110, 105),
                                           sf::Color(151, 197, 139, 64),
                                           sf::Color(98, 97, 160, 128)
-                                          );
+                                          ));
+    this->lastElement = std::distance(this->elements.begin(), this->elements.end());
 
     this->setSize(this->size);
     this->setPosition(this->position);
-    return this->lastElement;
+
+    return lastElement;
 }
 
 my_gui::ContextMenuElement* my_gui::ContextMenu::getElementAt(unsigned short index)
 {
-    return  (index <= this->lastElement) ? this->elements[index]: nullptr;
+    auto iterator = this->elements.begin();
+    std::advance(iterator, index);
+
+    return *iterator;
 }
 
 void my_gui::ContextMenu::delElementAt(unsigned short index)
 {
-    if (index > this->lastElement) { return; }
+    auto iterator = this->elements.begin();
+    std::advance(iterator, index);
 
-    this->elements[index] = nullptr;
-
-    for (int i = index; i < this->lastElement; ++i) { this->elements[i] = this->elements[i + 1]; }
-
-    --this->lastElement;
+    this->elements.erase(iterator);
+    this->lastElement = std::distance(this->elements.begin(), this->elements.end());
 
     this->setSize(this->size);
     this->setPosition(this->position);
@@ -105,9 +68,7 @@ void my_gui::ContextMenu::delElementAt(unsigned short index)
 
 void my_gui::ContextMenu::freeMemoryWidget()
 {
-    for (int i = 0; i <= this->lastElement; ++i) { delete this->elements[i]; }
-
-    delete[] this->elements;
+    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) {delete *i;}
 }
 
 void my_gui::ContextMenu::setSize(sf::Vector2f size)
@@ -117,9 +78,9 @@ void my_gui::ContextMenu::setSize(sf::Vector2f size)
     this->background.setScale(this->getSize().x / this->backgroundTexture.getSize().x,
                               this->getSize().y / this->backgroundTexture.getSize().y);
     this->elementSize = sf::Vector2f (this->getSize().x,
-                                      this->getSize().y / ((this->lastElement == -1 ? 0: this->lastElement) + 1));
+                                      this->getSize().y / (this->lastElement == 0 ? 1: this->lastElement));
 
-    for (int i = 0; i <= this->lastElement; ++i) { this->elements[i]->setSize(this->elementSize); }
+    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) { (*i)->setSize(this->elementSize); }
 }
 
 void my_gui::ContextMenu::setPosition(sf::Vector2f position)
@@ -128,12 +89,14 @@ void my_gui::ContextMenu::setPosition(sf::Vector2f position)
 
     this->background.setPosition(this->getPosition());
 
-    for (int i = 0; i <= this->lastElement; ++i)
+    int step = 0;
+    for (auto i = this->elements.begin(); i != this->elements.end(); ++i, ++step)
     {
-        this->elements[i]->setPosition(sf::Vector2f (this->getPosition().x,
-                                                     this->getPosition().y +
-                                                     this->elements[i]->getSize().y * i));
+        (*i)->setPosition(sf::Vector2f (this->getPosition().x,
+                                        this->getPosition().y +
+                                        this->elementSize.y * step));
     }
+
 }
 
 void my_gui::ContextMenu::setViewState(bool state) { this->viewState = state; }
@@ -144,12 +107,12 @@ void my_gui::ContextMenu::draw(sf::RenderWindow &window)
 
     this->getWindow()->draw(this->background);
 
-    for (int i = 0; i <= this->lastElement; ++i) { this->getElementAt(i)->draw(window); }
+    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) { (*i)->draw(*this->getWindow()); }
 }
 
 void my_gui::ContextMenu::checkOnEvent(sf::Event event)
 {
     if(!this->getViewState()) { return; }
 
-    for (int i = 0; i <= this->lastElement; ++i) { this->getElementAt(i)->checkOnEvent(event); }
+    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) { (*i)->checkOnEvent(event); }
 }

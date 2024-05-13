@@ -78,18 +78,16 @@ int main()
     my_gui::ContextMenu contextMenu (window,
                                      sf::Vector2f(100, 300),
                                      sf::Vector2f(100, 50),
-                                     nullptr,
-                                     10
+                                     nullptr
                                      );
 
-    std::cout << contextMenu.createDefaultElement();
-    contextMenu.addElement(&contextMenuElement);
-    std::cout << contextMenu.createDefaultElement();
-    std::cout << contextMenu.createDefaultElement();
-    std::cout << contextMenu.createDefaultElement();
+    std::cout << contextMenu.createElement();
+    std::cout << contextMenu.createElement();
+    std::cout << contextMenu.createElement();
 
-    contextMenu.setMaxAmountElements(2);
-    contextMenu.delElementAt(1);
+    std::cout << contextMenu.createElement();
+    //contextMenu.delElementAt(1);
+    std::cout << contextMenu.createElement();
 
     sf::Vector2i mousePosition;
 

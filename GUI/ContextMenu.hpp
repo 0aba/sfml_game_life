@@ -3,6 +3,8 @@
 
 #include "Widget.hpp"
 #include "ContextMenuElement.hpp"
+#include <list>
+
 
 namespace my_gui
 {
@@ -12,27 +14,18 @@ namespace my_gui
         sf::Sprite background;
         sf::Texture backgroundTexture;
 
-        unsigned short maxAmountElements;
-#       define EMPTY_ARRAY (-1)
-        short lastElement = EMPTY_ARRAY;
-        ContextMenuElement** elements = nullptr;
+        unsigned short lastElement;
+        std::list<ContextMenuElement*> elements;
         sf::Vector2f elementSize;
     public:
         ContextMenu(sf::RenderWindow& window,
                     sf::Vector2f size,
                     sf::Vector2f position,
-                    char* pathBackgroundTexture,
-                    unsigned short maxAmountElements);
+                    char* pathBackgroundTexture);
 
         void loadBackgroundTexture(char* path);
 
-        void setMaxAmountElements(unsigned short amount);
-        unsigned short getMaxAmountElements() const;
-
-#       define NOT_FOUND_ELEMENT (-1)
-#       define MAX_AMOUNT_ELEMENTS 32767
-        unsigned short addElement(ContextMenuElement* element);
-        unsigned short createDefaultElement();
+        unsigned short createElement();
         ContextMenuElement* getElementAt(unsigned short index);
         void delElementAt(unsigned short index);
 
