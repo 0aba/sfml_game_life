@@ -8,7 +8,36 @@ namespace my_gui
 {
     class MultilineTextArea: public Widget
     {
-        //todo! MultilineTextArea
+    private:
+        sf::String text;
+        sf::Font font;
+        sf::Color textColor;
+        sf::Text viewText;
+
+        unsigned short lengthLine;
+        unsigned short amountLines;
+    public:
+        MultilineTextArea(sf::RenderWindow& window,
+                          sf::Vector2f size,
+                          sf::Vector2f position,
+                          char* pathFont,
+                          sf::Color textColor,
+                          sf::String text
+                          );
+
+        void loadFont(char* pathFont);
+        void setTextColor(sf::Color textColor);
+        void setText(sf::String text);
+        sf::String getText();
+
+        void setSize(sf::Vector2f size) override;
+
+        void setPosition(sf::Vector2f position) override;
+        void setViewState(bool state) override;
+
+        void draw(sf::RenderWindow& window) override;
+
+        void checkOnEvent(sf::Event event) override; /*todo! add events???*/
     };
 
 }

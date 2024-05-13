@@ -26,6 +26,15 @@ namespace my_gui
         void loadBackgroundTexture(char* path);
 
         unsigned short createElement();
+        unsigned short createElement(char *pathBackgroundTexture,
+                                     char *pathImage,
+                                     char *pathFont,
+                                     sf::String text,
+                                     void (*clickEvent)(sf::RenderWindow* window, Widget* widget),
+                                     sf::Color textColor,
+                                     sf::Color idleColor,
+                                     sf::Color hoverColor,
+                                     sf::Color activeColor);
         ContextMenuElement* getElementAt(unsigned short index);
         void delElementAt(unsigned short index);
 

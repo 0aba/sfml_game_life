@@ -27,7 +27,7 @@ unsigned short my_gui::ContextMenu::createElement()
 {
     this->elements.push_front( new ContextMenuElement (*this->getWindow(),
                                           this->elementSize,
-                                          sf::Vector2f(300, 50),
+                                          sf::Vector2f(0, 0),
                                           nullptr,
                                           nullptr,
                                           nullptr,
@@ -38,6 +38,37 @@ unsigned short my_gui::ContextMenu::createElement()
                                           sf::Color(151, 197, 139, 64),
                                           sf::Color(98, 97, 160, 128)
                                           ));
+    this->lastElement = std::distance(this->elements.begin(), this->elements.end());
+
+    this->setSize(this->size);
+    this->setPosition(this->position);
+
+    return lastElement;
+}
+
+unsigned short my_gui::ContextMenu::createElement(char *pathBackgroundTexture,
+                                                 char *pathImage,
+                                                 char *pathFont,
+                                                 sf::String text,
+                                                 void (*clickEvent)(sf::RenderWindow* window, Widget* widget),
+                                                 sf::Color textColor,
+                                                 sf::Color idleColor,
+                                                 sf::Color hoverColor,
+                                                 sf::Color activeColor)
+{
+    this->elements.push_front( new ContextMenuElement (*this->getWindow(),
+                                                       this->elementSize,
+                                                       sf::Vector2f(0, 0),
+                                                       pathBackgroundTexture,
+                                                       pathImage,
+                                                       pathFont,
+                                                       text,
+                                                       clickEvent,
+                                                       textColor,
+                                                       idleColor,
+                                                       hoverColor,
+                                                       activeColor
+    ));
     this->lastElement = std::distance(this->elements.begin(), this->elements.end());
 
     this->setSize(this->size);

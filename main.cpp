@@ -9,6 +9,7 @@
 #include "GUI/HSlider.hpp"  // todo! test
 #include "GUI/ContextMenu.hpp"  // todo! test
 #include "GUI/ContextMenuElement.hpp"  // todo! test
+#include "GUI/MultilineTextArea.hpp"  // todo! test
 #include "GUI/Widget.hpp"  // todo! test
 
 
@@ -22,7 +23,7 @@ int main()
 
     my_gui::Button button
                     (window,
-                     sf::Vector2f(100, 50),
+                     sf::Vector2f(300, 200),
                    sf::Vector2f(50, 50),
                    nullptr,
                    nullptr,
@@ -87,7 +88,16 @@ int main()
 
     std::cout << contextMenu.createElement();
     //contextMenu.delElementAt(1);
-    std::cout << contextMenu.createElement();
+    std::cout << contextMenu.createElement() << std::endl;
+
+    my_gui::MultilineTextArea multilineTextArea (window,
+                                             sf::Vector2f(100, 100),
+                                             sf::Vector2f(500, 50),
+                                             nullptr,
+                                             sf::Color(255,155,55),
+                                             "123456789888888888"
+    );
+
 
     sf::Vector2i mousePosition;
 
@@ -135,6 +145,7 @@ int main()
         //hSlider.draw(window); //todo! test
         contextMenu.draw(window); //todo! test
         //contextMenu.getElementAt(0)->draw(window);
+        multilineTextArea.draw(window);
 
         window.display();
 
