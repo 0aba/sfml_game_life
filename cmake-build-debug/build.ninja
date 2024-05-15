@@ -193,6 +193,14 @@ build CMakeFiles/game_life.dir/GUI/ContextMenuElement.cpp.obj: CXX_COMPILER__gam
   OBJECT_DIR = CMakeFiles\game_life.dir
   OBJECT_FILE_DIR = CMakeFiles\game_life.dir\GUI
 
+build CMakeFiles/game_life.dir/GUI/Cell.cpp.obj: CXX_COMPILER__game_life_unscanned_Debug C$:/Users/aba/Desktop/game_life/GUI/Cell.cpp || cmake_object_order_depends_target_game_life
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\game_life.dir\GUI\Cell.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Utils/SFML-2.6.1/include/SFML -isystem D:/Utils/SFML-2.6.1/include
+  OBJECT_DIR = CMakeFiles\game_life.dir
+  OBJECT_FILE_DIR = CMakeFiles\game_life.dir\GUI
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target game_life
@@ -201,7 +209,7 @@ build CMakeFiles/game_life.dir/GUI/ContextMenuElement.cpp.obj: CXX_COMPILER__gam
 #############################################
 # Link the executable game_life.exe
 
-build game_life.exe: CXX_EXECUTABLE_LINKER__game_life_Debug CMakeFiles/game_life.dir/main.cpp.obj CMakeFiles/game_life.dir/game_logic/game_logic.cpp.obj CMakeFiles/game_life.dir/game_logic/settings.cpp.obj CMakeFiles/game_life.dir/pages/menu_page.cpp.obj CMakeFiles/game_life.dir/pages/rules_page.cpp.obj CMakeFiles/game_life.dir/pages/settings_page.cpp.obj CMakeFiles/game_life.dir/pages/game_page.cpp.obj CMakeFiles/game_life.dir/GUI/Widget.cpp.obj CMakeFiles/game_life.dir/GUI/MultilineTextArea.cpp.obj CMakeFiles/game_life.dir/GUI/Scrollbar.cpp.obj CMakeFiles/game_life.dir/GUI/HScrollbar.cpp.obj CMakeFiles/game_life.dir/GUI/VScrollbar.cpp.obj CMakeFiles/game_life.dir/GUI/Button.cpp.obj CMakeFiles/game_life.dir/GUI/Slider.cpp.obj CMakeFiles/game_life.dir/GUI/HSlider.cpp.obj CMakeFiles/game_life.dir/GUI/VSlider.cpp.obj CMakeFiles/game_life.dir/GUI/ContextMenu.cpp.obj CMakeFiles/game_life.dir/GUI/ContextMenuElement.cpp.obj | D$:/Utils/SFML-2.6.1/lib/libsfml-system-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-window-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-graphics-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-audio-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-window-s-d.a D$:/Utils/SFML-2.6.1/lib/libfreetype.a D$:/Utils/SFML-2.6.1/lib/libsfml-system-s-d.a D$:/Utils/SFML-2.6.1/lib/libopenal32.a D$:/Utils/SFML-2.6.1/lib/libvorbisfile.a D$:/Utils/SFML-2.6.1/lib/libvorbisenc.a D$:/Utils/SFML-2.6.1/lib/libvorbis.a D$:/Utils/SFML-2.6.1/lib/libogg.a D$:/Utils/SFML-2.6.1/lib/libFLAC.a
+build game_life.exe: CXX_EXECUTABLE_LINKER__game_life_Debug CMakeFiles/game_life.dir/main.cpp.obj CMakeFiles/game_life.dir/game_logic/game_logic.cpp.obj CMakeFiles/game_life.dir/game_logic/settings.cpp.obj CMakeFiles/game_life.dir/pages/menu_page.cpp.obj CMakeFiles/game_life.dir/pages/rules_page.cpp.obj CMakeFiles/game_life.dir/pages/settings_page.cpp.obj CMakeFiles/game_life.dir/pages/game_page.cpp.obj CMakeFiles/game_life.dir/GUI/Widget.cpp.obj CMakeFiles/game_life.dir/GUI/MultilineTextArea.cpp.obj CMakeFiles/game_life.dir/GUI/Scrollbar.cpp.obj CMakeFiles/game_life.dir/GUI/HScrollbar.cpp.obj CMakeFiles/game_life.dir/GUI/VScrollbar.cpp.obj CMakeFiles/game_life.dir/GUI/Button.cpp.obj CMakeFiles/game_life.dir/GUI/Slider.cpp.obj CMakeFiles/game_life.dir/GUI/HSlider.cpp.obj CMakeFiles/game_life.dir/GUI/VSlider.cpp.obj CMakeFiles/game_life.dir/GUI/ContextMenu.cpp.obj CMakeFiles/game_life.dir/GUI/ContextMenuElement.cpp.obj CMakeFiles/game_life.dir/GUI/Cell.cpp.obj | D$:/Utils/SFML-2.6.1/lib/libsfml-system-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-window-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-graphics-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-audio-s-d.a D$:/Utils/SFML-2.6.1/lib/libsfml-window-s-d.a D$:/Utils/SFML-2.6.1/lib/libfreetype.a D$:/Utils/SFML-2.6.1/lib/libsfml-system-s-d.a D$:/Utils/SFML-2.6.1/lib/libopenal32.a D$:/Utils/SFML-2.6.1/lib/libvorbisfile.a D$:/Utils/SFML-2.6.1/lib/libvorbisenc.a D$:/Utils/SFML-2.6.1/lib/libvorbis.a D$:/Utils/SFML-2.6.1/lib/libogg.a D$:/Utils/SFML-2.6.1/lib/libFLAC.a
   FLAGS = -g
   LINK_LIBRARIES = D:/Utils/SFML-2.6.1/lib/libsfml-system-s-d.a  D:/Utils/SFML-2.6.1/lib/libsfml-window-s-d.a  D:/Utils/SFML-2.6.1/lib/libsfml-graphics-s-d.a  D:/Utils/SFML-2.6.1/lib/libsfml-audio-s-d.a  D:/Utils/SFML-2.6.1/lib/libsfml-window-s-d.a  -lOpenGL32  -lgdi32  D:/Utils/SFML-2.6.1/lib/libfreetype.a  D:/Utils/SFML-2.6.1/lib/libsfml-system-s-d.a  -lwinmm  D:/Utils/SFML-2.6.1/lib/libopenal32.a  D:/Utils/SFML-2.6.1/lib/libvorbisfile.a  D:/Utils/SFML-2.6.1/lib/libvorbisenc.a  D:/Utils/SFML-2.6.1/lib/libvorbis.a  D:/Utils/SFML-2.6.1/lib/libogg.a  D:/Utils/SFML-2.6.1/lib/libFLAC.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\game_life.dir

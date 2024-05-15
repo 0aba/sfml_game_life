@@ -90,12 +90,16 @@ void my_gui::ContextMenu::delElementAt(unsigned short index)
     auto iterator = this->elements.begin();
     std::advance(iterator, index);
 
+    delete *iterator;
     this->elements.erase(iterator);
+
     this->lastElement = std::distance(this->elements.begin(), this->elements.end());
 
     this->setSize(this->size);
     this->setPosition(this->position);
 }
+
+unsigned short my_gui::ContextMenu::getIndexLastElement() const { return this->lastElement; }
 
 void my_gui::ContextMenu::freeMemoryWidget()
 {

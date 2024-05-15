@@ -37,6 +37,7 @@ namespace my_gui
                                      sf::Color activeColor);
         ContextMenuElement* getElementAt(unsigned short index);
         void delElementAt(unsigned short index);
+        unsigned short getIndexLastElement() const;
 
         void freeMemoryWidget();
 

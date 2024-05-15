@@ -41,6 +41,8 @@ add_executable(game_life main.cpp
         GUI/ContextMenu.hpp
         GUI/ContextMenuElement.cpp
         GUI/ContextMenuElement.hpp
+        GUI/Cell.cpp
+        GUI/Cell.hpp
 )
 
 set(SFML_STATIC_LIBRARIES True)

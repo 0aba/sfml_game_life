@@ -5,12 +5,6 @@
 #include "./pages/settings_page.hpp" // todo! change
 #include "./pages/game_page.hpp." // todo! change
 
-#include "GUI/Button.hpp" // todo! test
-#include "GUI/HSlider.hpp"  // todo! test
-#include "GUI/ContextMenu.hpp"  // todo! test
-#include "GUI/ContextMenuElement.hpp"  // todo! test
-#include "GUI/MultilineTextArea.hpp"  // todo! test
-#include "GUI/Widget.hpp"  // todo! test
 
 
 int main()
@@ -20,83 +14,6 @@ int main()
     sf::Font font; //todo! test
     font.loadFromFile(FRONT_TEXT_PATH); //todo! test
 
-
-    my_gui::Button button
-                    (window,
-                     sf::Vector2f(300, 200),
-                   sf::Vector2f(50, 50),
-                   nullptr,
-                   nullptr,
-                   "button",
-                   *([](sf::RenderWindow* window, my_gui::Widget* widget)
-                   {
-                       ((my_gui::Button*)widget)->setViewState(false);
-                   }),
-                   sf::Color(255, 219, 200),
-                   sf::Color(110, 110, 110, 105),
-                   sf::Color(151, 197, 139, 64),
-                   sf::Color(98, 97, 160, 128)
-            ); //todo! test
-
-    my_gui::HSlider hSlider(window,
-                    sf::Vector2f(250, 25),
-                    sf::Vector2f(100, 200),
-                    nullptr,
-                    nullptr,
-                    nullptr,
-                    nullptr,
-                    .5f,
-                    *([](sf::RenderWindow* window, my_gui::Widget* widget)
-                    {
-                        std::cout << "val: " << ((my_gui::HSlider*)widget)->getValuesPointer() << std::endl;
-                    }),
-                    sf::Color(0, 255, 0),
-                    sf::Color(110, 110, 110, 105),
-                    sf::Color(151, 197, 139, 64),
-                    sf::Color(98, 97, 160, 128),
-                    0,
-                    10
-                    ); //todo! test
-
-    my_gui::ContextMenuElement contextMenuElement(window,
-                                                  sf::Vector2f(100, 50),
-                                                  sf::Vector2f(300, 50),
-                                                  nullptr,
-                                                  nullptr,
-                                                  nullptr,
-                                                  "element",
-                                                  *([](sf::RenderWindow* window, my_gui::Widget* widget)
-                                                  {
-                                                      std::cout << "click on elemet" << std::endl;
-                                                  }),
-                                                  sf::Color(255, 219, 200),
-                                                  sf::Color(110, 110, 110, 105),
-                                                  sf::Color(151, 197, 139, 64),
-                                                  sf::Color(98, 97, 160, 128)
-                                                  ); // todo!
-
-
-    my_gui::ContextMenu contextMenu (window,
-                                     sf::Vector2f(100, 300),
-                                     sf::Vector2f(100, 50),
-                                     nullptr
-                                     );
-
-    std::cout << contextMenu.createElement();
-    std::cout << contextMenu.createElement();
-    std::cout << contextMenu.createElement();
-
-    std::cout << contextMenu.createElement();
-    //contextMenu.delElementAt(1);
-    std::cout << contextMenu.createElement() << std::endl;
-
-    my_gui::MultilineTextArea multilineTextArea (window,
-                                             sf::Vector2f(100, 100),
-                                             sf::Vector2f(500, 50),
-                                             nullptr,
-                                             sf::Color(255,155,55),
-                                             "123456789888888888"
-    );
 
 
     sf::Vector2i mousePosition;
@@ -134,25 +51,16 @@ int main()
 
             viewPage->checkOnEvent(event, mousePosition);
 
-            //button.checkOnEvent(event); //todo! test
-            //hSlider.checkOnEvent(event); //todo! test
-            contextMenu.checkOnEvent(event); //todo! test
-            //contextMenu.getElementAt(0)->checkOnEvent(event);
         }
 
         viewPage->drawOnWindow(window);
-        //button.draw(window); //todo! test
-        //hSlider.draw(window); //todo! test
-        contextMenu.draw(window); //todo! test
-        //contextMenu.getElementAt(0)->draw(window);
-        multilineTextArea.draw(window);
+
 
         window.display();
 
         viewPage->close(window);
     }
 
-    contextMenu.freeMemoryWidget(); // todo! test
 
     return EXIT_SUCCESS;
 }

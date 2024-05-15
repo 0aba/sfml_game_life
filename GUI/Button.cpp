@@ -67,7 +67,7 @@ void my_gui::Button::loadBackgroundTexture(char *path)
     if(path != nullptr && this->backgroundTexture.loadFromFile(path)) { }
     else if (!this->backgroundTexture.loadFromFile("resources_GUI\\button_background.png")) { return; }
 
-    background.setTexture(this->backgroundTexture);
+    this->background.setTexture(this->backgroundTexture);
 }
 
 void my_gui::Button::setSize(sf::Vector2f size)

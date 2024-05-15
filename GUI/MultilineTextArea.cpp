@@ -1,6 +1,5 @@
 #include "MultilineTextArea.hpp"
 #include <cmath>
-#include <iostream>
 
 
 my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
@@ -11,16 +10,14 @@ my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
                                              sf::String text)
 {
     this->setWindow(window);
-    this->lengthLine = 0;
-    this->amountLines = 0;
     this->text = text;
-    this->viewText.setCharacterSize(1);
 
     this->loadFont(pathFont);
     this->setTextColor(textColor);
-    this->setText(text);
 
-    ((MultilineTextArea*) this)->setSize(size);
+    //((MultilineTextArea*) this)->setSize(size);
+    this->size = size;
+    this->setText(text);
     ((MultilineTextArea*) this)->setPosition(position);
 }
 
@@ -48,34 +45,33 @@ void my_gui::MultilineTextArea::setText(sf::String text)
 
 sf::String my_gui::MultilineTextArea::getText() { return this->text; }
 
-void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
+void my_gui::MultilineTextArea::setSize(sf::Vector2f size) // todo! change
 {
-    short newSize = size.y;
+    short newSize = 1;
     this->lengthLine = this->text.getSize();
     this->amountLines = 1;
 
-    while (newSize > 1)
+    while (newSize < size.y)
     {
-        this->lengthLine = std::ceil(size.x / newSize);
+        this->lengthLine = std::ceil(size.x / (newSize * .5f)); // newSize * this->lengthLine <= size.x
         this->amountLines = std::ceil(this->text.getSize() / lengthLine);
 
-        if (newSize * this->lengthLine <= size.x && newSize * this->amountLines  <= size.y)
+        if (newSize > (size.y / this->amountLines))
         {
-            this->viewText.setCharacterSize(newSize);
-            this->viewText.setString(this->text);
             break;
         }
 
-        --newSize;
+        ++newSize;
     }
 
-    //todo! !!!!!!!!!!!!!!!!!!!!!
+    this->viewText.setCharacterSize(newSize);
+
     sf::String newViewString;
 
     for (int i = 0; i < this->text.getSize(); ++i)
     {
         newViewString += this->text[i];
-        if (i % this->lengthLine == 0 && i != 0) { newViewString += "\n"; }
+        if  ((i + 1) % this->lengthLine == 0) { newViewString += "\n"; }
     }
 
     this->viewText.setString(newViewString);
