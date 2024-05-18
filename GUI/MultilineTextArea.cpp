@@ -1,7 +1,6 @@
 #include "MultilineTextArea.hpp"
 #include <cmath>
 
-#include <iostream>
 
 my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
                                              sf::Vector2f size,
@@ -60,12 +59,13 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
 
     while (newSize < size.y)
     {
-        int averageCharWidth = this->viewText.getGlobalBounds().width / this->viewText.getString().getSize();
+        int averageCharWidth = std::ceil(this->viewText.getGlobalBounds().width / this->viewText.getString().getSize());
+        if (averageCharWidth == 0) { averageCharWidth = 1; }
 
-        this->amountCharOnLine = size.x / averageCharWidth;
+        this->amountCharOnLine = this->getSize().x / averageCharWidth;
 
         this->amountLines = (this->viewText.getString().getSize() / this->amountCharOnLine) + 1;
-
+        if (amountLines == 0) { amountLines = 1; }
 
         if ((this->viewText.getGlobalBounds().height * this->amountLines * 1.25f) > this->getSize().y )
         {
@@ -73,7 +73,7 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
             this->viewText.setCharacterSize(newSize);
             averageCharWidth = this->viewText.getGlobalBounds().width / this->viewText.getString().getSize();
 
-            this->amountCharOnLine = size.x / averageCharWidth;
+            this->amountCharOnLine = this->getSize().x / averageCharWidth;
 
             this->amountLines = (this->viewText.getString().getSize() / this->amountCharOnLine) + 1;
             break;
@@ -84,12 +84,22 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
     }
 
     sf::String newViewString;
+    sf::String lineViewString;
 
     for (int i = 0; i < this->text.getSize(); ++i)
     {
-        newViewString += this->text[i];
-        if  ((i + 1) % this->amountCharOnLine == 0) { newViewString += "\n"; }
+
+        lineViewString += this->text[i];
+#       define SPACE_IN_VIEW "_"
+        this->viewText.setString(lineViewString + SPACE_IN_VIEW);
+
+        if  (this->viewText.getGlobalBounds().width > this->getSize().x || (i + 1) == this->text.getSize())
+        {
+            newViewString += lineViewString + "\n";
+            lineViewString.clear();
+        }
     }
+
     this->viewText.setString(newViewString);
 }
 

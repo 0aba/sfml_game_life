@@ -45,7 +45,7 @@ int main()
                                                  p,
                                                  nullptr,
                                                  sf::Color(255,155,55),
-                                                 "1234567890_1234567890"
+                                                 "1234567890_1234567" // ........_WW3QQ111WW
     );
 
     sf::Vector2i mousePosition;
