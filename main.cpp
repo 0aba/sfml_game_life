@@ -32,7 +32,7 @@ int main()
  */
     //float w = te.getGlobalBounds().width / te.getString().getSize();
 
-    sf::Vector2f s = sf::Vector2f(200  , 100);
+    sf::Vector2f s = sf::Vector2f(400  , 400);
     sf::Vector2f p = sf::Vector2f(5, 5);
 
     sf::RectangleShape r;
@@ -45,7 +45,7 @@ int main()
                                                  p,
                                                  nullptr,
                                                  sf::Color(255,155,55),
-                                                 "1234567890_1234567" // ........_WW3QQ111WW
+                                                 "kojj  efi   eefjefciwejcfk 1111eee,,,,,3,d,2c,,,,d12d//" // ........_WW3QQ111WW
     );
 
     sf::Vector2i mousePosition;

@@ -4,11 +4,13 @@ project(game_life)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(game_life main.cpp
-        game_logic/game_logic.cpp
-        game_logic/game_logic.hpp
+        game_logic/Game.cpp
+        game_logic/Game.hpp
+        game_logic/GameWidget.cpp
+        game_logic/GameWidget.hpp
+        game_logic/Cell.cpp
+        game_logic/Cell.hpp
         game_logic/my_types.hpp
-        game_logic/settings.cpp
-        game_logic/settings.hpp
         pages/menu_page.cpp
         pages/menu_page.hpp
         pages/Utils.hpp
@@ -41,8 +43,6 @@ add_executable(game_life main.cpp
         GUI/ContextMenu.hpp
         GUI/ContextMenuElement.cpp
         GUI/ContextMenuElement.hpp
-        GUI/Cell.cpp
-        GUI/Cell.hpp
 )
 
 set(SFML_STATIC_LIBRARIES True)
