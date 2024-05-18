@@ -5,6 +5,7 @@
 #include "./pages/settings_page.hpp" // todo! change
 #include "./pages/game_page.hpp." // todo! change
 
+#include "GUI/MultilineTextArea.hpp"
 
 
 int main()
@@ -14,7 +15,38 @@ int main()
     sf::Font font; //todo! test
     font.loadFromFile(FRONT_TEXT_PATH); //todo! test
 
+/*sf::Text te ("Adw;,dpw_25132A", font, 30);
+1) длинаю.х / te.getGlobalBounds().width / te.getString().getSize() = длина символа в ширену
+2) te.getString().getSize() /  длина символа в ширену = строк
 
+
+ строка строка = "";
+
+ ++строка
+
+ и условие
+
+ ---
+
+// Теперь переменная symbolWidth содержит ширину символа "A" в пикселях
+ */
+    //float w = te.getGlobalBounds().width / te.getString().getSize();
+
+    sf::Vector2f s = sf::Vector2f(200  , 100);
+    sf::Vector2f p = sf::Vector2f(5, 5);
+
+    sf::RectangleShape r;
+    r.setSize(s);
+    r.setPosition(p);
+
+
+    my_gui::MultilineTextArea multilineTextArea (window,
+                                                 s,
+                                                 p,
+                                                 nullptr,
+                                                 sf::Color(255,155,55),
+                                                 "1234567890_1234567890"
+    );
 
     sf::Vector2i mousePosition;
 
@@ -54,6 +86,8 @@ int main()
         }
 
         viewPage->drawOnWindow(window);
+        window.draw(r);
+        multilineTextArea.draw(window);
 
 
         window.display();

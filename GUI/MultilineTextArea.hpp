@@ -14,7 +14,7 @@ namespace my_gui
         sf::Color textColor;
         sf::Text viewText;
 
-        unsigned short lengthLine;
+        unsigned short amountCharOnLine;
         unsigned short amountLines;
     public:
         MultilineTextArea(sf::RenderWindow& window,

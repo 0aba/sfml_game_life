@@ -1,6 +1,7 @@
 #include "MultilineTextArea.hpp"
 #include <cmath>
 
+#include <iostream>
 
 my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
                                              sf::Vector2f size,
@@ -18,6 +19,8 @@ my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
     //((MultilineTextArea*) this)->setSize(size);
     this->size = size;
     this->setText(text);
+
+
     ((MultilineTextArea*) this)->setPosition(position);
 }
 
@@ -39,41 +42,54 @@ void my_gui::MultilineTextArea::setTextColor(sf::Color textColor)
 void my_gui::MultilineTextArea::setText(sf::String text)
 {
     this->text = text;
-
     this->setSize(this->size);
 }
 
 sf::String my_gui::MultilineTextArea::getText() { return this->text; }
 
-void my_gui::MultilineTextArea::setSize(sf::Vector2f size) // todo! change
+void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
 {
+    this->viewText.setString(this->text);
+    if (this->text.getSize() == 0) { return; }
+
     short newSize = 1;
-    this->lengthLine = this->text.getSize();
+    this->viewText.setCharacterSize(newSize);
+
+    this->amountCharOnLine = this->text.getSize();
     this->amountLines = 1;
 
     while (newSize < size.y)
     {
-        this->lengthLine = std::ceil(size.x / (newSize * .5f)); // newSize * this->lengthLine <= size.x
-        this->amountLines = std::ceil(this->text.getSize() / lengthLine);
+        int averageCharWidth = this->viewText.getGlobalBounds().width / this->viewText.getString().getSize();
 
-        if (newSize > (size.y / this->amountLines))
+        this->amountCharOnLine = size.x / averageCharWidth;
+
+        this->amountLines = (this->viewText.getString().getSize() / this->amountCharOnLine) + 1;
+
+
+        if ((this->viewText.getGlobalBounds().height * this->amountLines * 1.25f) > this->getSize().y )
         {
+            --newSize;
+            this->viewText.setCharacterSize(newSize);
+            averageCharWidth = this->viewText.getGlobalBounds().width / this->viewText.getString().getSize();
+
+            this->amountCharOnLine = size.x / averageCharWidth;
+
+            this->amountLines = (this->viewText.getString().getSize() / this->amountCharOnLine) + 1;
             break;
         }
 
         ++newSize;
+        this->viewText.setCharacterSize(newSize);
     }
-
-    this->viewText.setCharacterSize(newSize);
 
     sf::String newViewString;
 
     for (int i = 0; i < this->text.getSize(); ++i)
     {
         newViewString += this->text[i];
-        if  ((i + 1) % this->lengthLine == 0) { newViewString += "\n"; }
+        if  ((i + 1) % this->amountCharOnLine == 0) { newViewString += "\n"; }
     }
-
     this->viewText.setString(newViewString);
 }
 
