@@ -39,8 +39,6 @@ namespace my_gui
         void delElementAt(unsigned short index);
         unsigned short getIndexLastElement() const;
 
-        void freeMemoryWidget();
-
         void setSize(sf::Vector2f size) override;
 
         void setPosition(sf::Vector2f position) override;
@@ -48,6 +46,8 @@ namespace my_gui
 
         void draw(sf::RenderWindow& window) override;
         void checkOnEvent(sf::Event event) override;
+
+        ~ContextMenu();
     };
 }
 

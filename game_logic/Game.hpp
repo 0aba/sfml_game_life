@@ -18,7 +18,8 @@ const Offset displacementOptions[AMOUNT_DISPLACEMENT_OPTIONS] =
                 {-1, -1}, {0, -1}, {1, -1}
         };
 
-struct   Coords {
+struct Coords
+{
     u16 x = 0;
     u16 y = 0;
 
@@ -46,9 +47,6 @@ enum     TypeCell {
     KillingCell     = 'K',
     LifeSupportCell = 'S'
 };
-
-// todo! будет в классе widget game
-#define MAX_SIDE_SIZE 64
 
 class Game
 {

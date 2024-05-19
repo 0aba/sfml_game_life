@@ -101,11 +101,6 @@ void my_gui::ContextMenu::delElementAt(unsigned short index)
 
 unsigned short my_gui::ContextMenu::getIndexLastElement() const { return this->lastElement; }
 
-void my_gui::ContextMenu::freeMemoryWidget()
-{
-    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) {delete *i;}
-}
-
 void my_gui::ContextMenu::setSize(sf::Vector2f size)
 {
     this->size = size;
@@ -150,4 +145,9 @@ void my_gui::ContextMenu::checkOnEvent(sf::Event event)
     if(!this->getViewState()) { return; }
 
     for (auto i = this->elements.begin(); i != this->elements.end(); ++i) { (*i)->checkOnEvent(event); }
+}
+
+my_gui::ContextMenu::~ContextMenu()
+{
+    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) {delete *i;}
 }

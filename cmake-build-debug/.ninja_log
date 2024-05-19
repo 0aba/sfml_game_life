@@ -26,3 +26,7 @@
 13	3689	7377644580498981	CMakeFiles/game_life.dir/main.cpp.obj	6acaf5545b2a91f4
 29	3896	7377644582600960	CMakeFiles/game_life.dir/game_logic/GameWidget.cpp.obj	709fd0bad6621b5e
 3897	5196	7377644595469998	game_life.exe	ae76870ca06e33e9
+19	1359	7378201649563102	CMakeFiles/game_life.dir/game_logic/Game.cpp.obj	2a96e90ffddc5481
+37	2235	7378201658343847	CMakeFiles/game_life.dir/GUI/ContextMenu.cpp.obj	b91336b37f8a8676
+29	2731	7378201663329781	CMakeFiles/game_life.dir/game_logic/GameWidget.cpp.obj	709fd0bad6621b5e
+2731	3891	7378201674816192	game_life.exe	ae76870ca06e33e9

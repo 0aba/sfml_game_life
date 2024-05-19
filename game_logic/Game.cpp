@@ -113,22 +113,46 @@ u16 Game::getArenaSizeX() const { return this->__arenaSizeX; }
 void Game::setArenaSizeY(unsigned short size) { this->__arenaSizeY = size; }
 u16 Game::getArenaSizeY() const { return this->__arenaSizeY;}
 
-void Game::setTimeStep(unsigned short timeStep) { this->__timeStep = timeStep; }
-u16 Game::getTimeStep() const { return this->__timeStep;}
+void Game::setTimeStep(unsigned short timeStep)
+{
+    if (MIN_VALUE_TIME_STEP > timeStep || MAX_VALUE_TIME_STEP < timeStep) { this->__timeStep = DEFAULT_TIME_STEP; }
+    this->__timeStep = timeStep;
+}
+u16 Game::getTimeStep() const { return this->__timeStep; }
 
-void Game::setAmountIterations(unsigned short iterations) { this->__amountIterations = iterations; }
+void Game::setAmountIterations(unsigned short iterations)
+{
+    if (MIN_VALUE_ITERATIONS > iterations || MAX_VALUE_ITERATIONS < iterations) { this->__amountIterations = DEFAULT_ITERATIONS; }
+    this->__amountIterations = iterations;
+}
 u16 Game::getAmountIterations() const { return this->__amountIterations; }
 
-void Game::setLivingPercent(unsigned short percent) { this->__LivingPercent = percent; }
+void Game::setLivingPercent(unsigned short percent)
+{
+    if (MIN_VALUE_LIVING > percent || MAX_VALUE_LIVING < percent) { this->__LivingPercent = DEFAULT_LIVING; }
+    this->__LivingPercent = percent;
+}
 u16 Game::getLivingPercent() const { return this->__LivingPercent; }
 
-void Game::setWallPercent(unsigned short percent) { this->__WallPercent = percent; }
+void Game::setWallPercent(unsigned short percent)
+{
+    if (MIN_VALUE_SPECIAL_CELL > percent || MAX_VALUE_SPECIAL_CELL < percent) { this->__WallPercent = DEFAULT_SPECIAL_CELL; }
+    this->__WallPercent = percent;
+}
 u16 Game::getWallPercent() const { return this->__WallPercent; }
 
-void Game::setKillingPercent(unsigned short percent) { this->__KillingPercent = percent; }
+void Game::setKillingPercent(unsigned short percent)
+{
+    if (MIN_VALUE_SPECIAL_CELL > percent || MAX_VALUE_SPECIAL_CELL < percent) { this->__KillingPercent = DEFAULT_SPECIAL_CELL; }
+    this->__KillingPercent = percent;
+}
 u16 Game::getKillingPercent() const { return this->__KillingPercent; }
 
-void Game::setSupportPercent(unsigned short percent) { this->__SupportPercent = percent; }
+void Game::setSupportPercent(unsigned short percent)
+{
+    if (MIN_VALUE_SPECIAL_CELL > percent || MAX_VALUE_SPECIAL_CELL < percent) { this->__SupportPercent = DEFAULT_SPECIAL_CELL; }
+    this->__SupportPercent = percent;
+}
 u16 Game::getSupportPercent() const {return this->__SupportPercent;}
 
 void Game::developmentOfLife()
