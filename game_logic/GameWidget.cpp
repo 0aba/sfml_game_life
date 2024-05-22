@@ -207,6 +207,8 @@ void GameWidget::setSize(sf::Vector2f size)
                                            this->getSize().y * .099f));
     this->sliderSpeed->setSize(sf::Vector2f((this->getSize().x * .95f) / 2,
                                             this->getSize().y * .099f));
+    this->contextMenuCell->setSize(sf::Vector2f(this->getSize().x * .15f,
+                                                this->getSize().y * .15f));
 }
 
 void GameWidget::setPosition(sf::Vector2f position)
@@ -229,14 +231,67 @@ void GameWidget::draw(sf::RenderWindow &window)
 {
     if(!this->getViewState()) { return; }
 
+    for (int x = 0; x < this->amountCellOnY; ++x)
+    {
+        for (int y = 0; y < this->amountCellOnX; ++y)
+        {
+            TypeCell typeCurrentCell = this->game->getCell({(u16) y, (u16) x});
 
+            Cell* viewCell;
+
+            switch (typeCurrentCell)
+            {
+                case TypeCell::LivingCell: viewCell = this->livingCell; break;
+                case TypeCell::DeadCell: viewCell = this->deadCell; break;
+                case TypeCell::Wall: viewCell = this->wall; break;
+                case TypeCell::KillingCell: viewCell = this->killingCell; break;
+                case TypeCell::LifeSupportCell: viewCell = this->lifeSupportCell; break;
+            }
+
+            viewCell->setPosition(sf::Vector2f (this->getPosition().x + this->sizeCell.x * x,
+                                            this->getPosition().y + this->sizeCell.y * y));
+            viewCell->draw(*this->getWindow());
+        }
+    }
+
+    this->sliderSpeed->draw(*this->getWindow());
+    this->buttonGame->draw(*this->getWindow());
 }
 
 void GameWidget::checkOnEvent(sf::Event event)
 {
     if(!this->getViewState()) { return; }
 
+    float x, y;
 
+    if (event.mouseButton.button == sf::Mouse::Right)
+    {
+        x = (sf::Mouse::getPosition(*this->getWindow()).x - this->getPosition().x) /
+                this->amountCellOnX;
+        y = (sf::Mouse::getPosition(*this->getWindow()).y - this->getPosition().y * .95f) /
+                this->amountCellOnY;
+
+        if (x >= 0 && x <= this->amountCellOnX
+            &&
+            y >= 0 && y <= this->amountCellOnY)
+        {
+            this->selected = true;
+            this->selectedCellCoord = Coords {(u16) x, (u16) y};
+
+            this->contextMenuCell->setPosition(sf::Vector2f (sf::Mouse::getPosition(*this->getWindow()).x,
+                                                             sf::Mouse::getPosition(*this->getWindow()).y));
+        }
+        else /*if (x < 0 || x > this->amountCellOnX || y < 0 || y > this->amountCellOnY)*/
+        {
+            this->selected = false;
+        }
+    }
+
+    if (this->selected) { this->contextMenuCell->draw(*this->getWindow()); }
+
+
+    this->sliderSpeed->checkOnEvent(event);
+    this->buttonGame->checkOnEvent(event);
 }
 
 

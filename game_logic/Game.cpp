@@ -163,6 +163,10 @@ void Game::developmentOfLife()
 
 void Game::setCell(Coords coord, TypeCell type) { this->__mapGame[coord] = type; }
 
+TypeCell Game::getCell(Coords coord) { return this->__mapGame.find(coord) != this->__mapGame.end()
+                                              ?
+                                              this->__mapGame.at(coord) : TypeCell::DeadCell;}
+
 void Game::setRandomMapGame()
 {
     TypeCell typeCurrentCell;

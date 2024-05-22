@@ -95,6 +95,7 @@ public:
     void developmentOfLife();
 
     void setCell(Coords coord, TypeCell type);
+    TypeCell getCell(Coords coord);
 
     void setRandomMapGame();
 
