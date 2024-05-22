@@ -23,7 +23,7 @@ my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
     ((MultilineTextArea*) this)->setPosition(position);
 }
 
-void my_gui::MultilineTextArea::loadFont(char *pathFont)
+void my_gui::MultilineTextArea::loadFont(const char *pathFont)
 {
     if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
     else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
@@ -48,6 +48,7 @@ sf::String my_gui::MultilineTextArea::getText() { return this->text; }
 
 void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
 {
+    this->size = size;
     this->viewText.setString(this->text);
     if (this->text.getSize() == 0) { return; }
 
@@ -67,7 +68,8 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
         this->amountLines = (this->viewText.getString().getSize() / this->amountCharOnLine) + 1;
         if (amountLines == 0) { amountLines = 1; }
 
-        if ((this->viewText.getGlobalBounds().height * this->amountLines * 1.25f) > this->getSize().y )
+        // todo! доработать
+        if ((this->viewText.getGlobalBounds().height * this->amountLines * 1.25f) > this->getSize().y)
         {
             --newSize;
             this->viewText.setCharacterSize(newSize);

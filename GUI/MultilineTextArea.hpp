@@ -25,7 +25,7 @@ namespace my_gui
                           sf::String text
                           );
 
-        void loadFont(char* pathFont);
+        void loadFont(const char* pathFont);
         void setTextColor(sf::Color textColor);
         void setText(sf::String text);
         sf::String getText();

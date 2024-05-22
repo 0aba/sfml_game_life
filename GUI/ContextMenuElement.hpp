@@ -2,6 +2,7 @@
 #define MY_GUI_CONTEXT_MENU_ELEMENT_HPP
 
 #include "Widget.hpp"
+#include "MultilineTextArea.hpp"
 #include "Utils.hpp"
 
 
@@ -15,9 +16,7 @@ namespace my_gui
         sf::Sprite image;
         sf::Texture imageTexture;
 
-        sf::Font font;
-        sf::Color textColor;
-        sf::Text text; //todo! заменить в будующим на MultilineTextArea !!!!!!
+        my_gui::MultilineTextArea* text;
 
         TypeAction currentAction = TypeAction::Idle;
         sf::Color idleColor;
@@ -39,6 +38,8 @@ namespace my_gui
                            sf::Color hoverColor,
                            sf::Color activeColor
         );
+
+        ~ContextMenuElement();
 
         void loadBackgroundTexture(char* path);
         void loadImage(char* path);
@@ -63,6 +64,5 @@ namespace my_gui
         void checkOnEvent(sf::Event event) override;
     };
 }
-
 
 #endif //MY_GUI_CONTEXT_MENU_ELEMENT_HPP

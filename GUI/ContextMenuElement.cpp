@@ -17,14 +17,18 @@ my_gui::ContextMenuElement::ContextMenuElement(sf::RenderWindow &window,
 {
     this->setWindow(window);
 
+    this->text = new my_gui::MultilineTextArea(window,
+                                               size,
+                                               position,
+                                               pathFont,
+                                               textColor,
+                                               text);
+
     this->loadBackgroundTexture(pathBackgroundTexture);
     this->backgroundTexture.setSmooth(true);
     this->loadImage(pathImage);
     this->imageTexture.setSmooth(true);
-    this->loadFont(pathFont);
-    this->setText(text);
     this->setClickEvent(clickEvent);
-    this->setTextColor(textColor);
     this->setIdleColor(idleColor);
     this->setHoverColor(hoverColor);
     this->setActiveColor(activeColor);
@@ -32,6 +36,11 @@ my_gui::ContextMenuElement::ContextMenuElement(sf::RenderWindow &window,
     // просто this тоже работает, но так нет уведомлений от ide
     ((ContextMenuElement*) this)->setSize(size);
     ((ContextMenuElement*) this)->setPosition(position);
+}
+
+my_gui::ContextMenuElement::~ContextMenuElement()
+{
+    delete this->text;
 }
 
 void my_gui::ContextMenuElement::loadBackgroundTexture(char *path)
@@ -50,24 +59,13 @@ void my_gui::ContextMenuElement::loadImage(char *path)
     this->image.setTexture(imageTexture);
 }
 
-void my_gui::ContextMenuElement::loadFont(const char *pathFont)
-{
-    if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
-    else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
+void my_gui::ContextMenuElement::loadFont(const char *pathFont) { this->text->loadFont(pathFont); }
 
-    this->text.setFont(this->font);
-}
+void my_gui::ContextMenuElement::setTextColor(sf::Color textColor) {}
 
-void my_gui::ContextMenuElement::setTextColor(sf::Color textColor)
-{
-    this->textColor = textColor;
+void my_gui::ContextMenuElement::setText(sf::String text) { this->text->setText(text); }
 
-    text.setFillColor(this->textColor);
-}
-
-void my_gui::ContextMenuElement::setText(sf::String text) { this->text.setString(text); }
-
-sf::String my_gui::ContextMenuElement::getText() {return this->text.getString(); }
+sf::String my_gui::ContextMenuElement::getText() {return this->text->getText(); }
 
 void my_gui::ContextMenuElement::setClickEvent(void (*clickEvent)(sf::RenderWindow *, Widget *)) { this->clickEvent = clickEvent; }
 
@@ -87,7 +85,7 @@ void my_gui::ContextMenuElement::setSize(sf::Vector2f size)
     this->image.setScale( this->getSize().x * .2f / this->imageTexture.getSize().x,
                           this->getSize().y / this->imageTexture.getSize().y);
 
-    this->text.setCharacterSize(std::ceil(this->backgroundTexture.getSize().y * this->background.getScale().y * .5f * .8f));
+    this->text->setSize(sf::Vector2f (this->getSize().x * .66f, this->getSize().y));
 }
 
 void my_gui::ContextMenuElement::setPosition(sf::Vector2f position)
@@ -97,13 +95,11 @@ void my_gui::ContextMenuElement::setPosition(sf::Vector2f position)
     this->background.setPosition(this->position);
 
     this->image.setPosition(this->position);
-
-    this->text.setPosition(this->background.getPosition().x +
-                           this->backgroundTexture.getSize().x * this->background.getScale().x * .275f,
-                           this->background.getPosition().y +
-                           this->getSize().y * .5f -
-                           this->text.getCharacterSize() * .5f
-                           );
+    //todo! поправить scale пропорции для картинок
+    this->text->setPosition(sf::Vector2f (((this->getSize().x / this->backgroundTexture.getSize().x) *
+                                          this->getPosition().x +
+                                          this->getPosition().x),
+                                          this->getPosition().y));
 }
 
 void my_gui::ContextMenuElement::setViewState(bool state) { this->viewState = state; }
@@ -120,7 +116,7 @@ void my_gui::ContextMenuElement::draw(sf::RenderWindow &window)
 
     this->getWindow()->draw(this->background);
     this->getWindow()->draw(this->image);
-    this->getWindow()->draw(this->text);
+    this->text->draw(*this->getWindow());
 }
 
 void my_gui::ContextMenuElement::checkOnEvent(sf::Event event)

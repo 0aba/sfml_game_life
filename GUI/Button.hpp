@@ -2,6 +2,7 @@
 #define MY_GUI_BUTTON_HPP
 
 #include "Widget.hpp"
+#include "MultilineTextArea.hpp"
 #include "Utils.hpp"
 
 namespace my_gui
@@ -12,9 +13,10 @@ namespace my_gui
         sf::Sprite background;
         sf::Texture backgroundTexture;
 
-        sf::Color textColor;
-        sf::Font font;
-        sf::Text text; //todo! заменить в будующим на MultilineTextArea !!!!!!
+        //sf::Color textColor;
+        //sf::Font font;
+        //sf::Text text1; //todo! заменить в будующим на MultilineTextArea !!!!!!
+        my_gui::MultilineTextArea* text;
 
         void (*clickEvent)(sf::RenderWindow* window, Widget* widget){};
 
@@ -35,6 +37,8 @@ namespace my_gui
                sf::Color hoverColor,
                sf::Color activeColor
         );
+
+        ~Button();
 
         void loadFont(char* pathFont);
         void setTextColor(sf::Color textColor);

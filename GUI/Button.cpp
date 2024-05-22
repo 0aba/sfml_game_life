@@ -16,12 +16,16 @@ my_gui::Button::Button(sf::RenderWindow& window,
 {
     this->setWindow(window);
 
+    this->text = new my_gui::MultilineTextArea(window,
+                                               size,
+                                               position,
+                                               pathFont,
+                                               textColor,
+                                               text);
+
     this->loadBackgroundTexture(pathBackgroundTexture);
     this->backgroundTexture.setSmooth(true);
-    this->loadFont(pathFont);
-    this->setText(text);
     this->setClickEvent(clickEvent);
-    this->setTextColor(textColor);
     this->setIdleColor(idleColor);
     this->setHoverColor(hoverColor);
     this->setActiveColor(activeColor);
@@ -31,28 +35,18 @@ my_gui::Button::Button(sf::RenderWindow& window,
     ((Button*) this)->setPosition(position);
 }
 
-void my_gui::Button::loadFont(char* pathFont)
+my_gui::Button::~Button()
 {
-    if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
-    else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
-
-    this->text.setFont(this->font);
+    delete this->text;
 }
 
-void my_gui::Button::setTextColor(sf::Color textColor)
-{
-    this->textColor = textColor;
-    this->text.setFillColor(this->textColor);
-}
+void my_gui::Button::loadFont(char* pathFont) { this->text->loadFont(pathFont); }
 
-void my_gui::Button::setText(sf::String text)
-{
-    this->text.setString(text);
-    
-    this->setPosition(this->getPosition());
-}
+void my_gui::Button::setTextColor(sf::Color textColor) { this->text->setTextColor(textColor); }
 
-sf::String my_gui::Button::getText() { return this->text.getString();}
+void my_gui::Button::setText(sf::String text) { this->text->setText(text); }
+
+sf::String my_gui::Button::getText() { return this->text->getText();}
 
 void my_gui::Button::setIdleColor(sf::Color idleColor) { this->idleColor = idleColor; }
 
@@ -76,20 +70,14 @@ void my_gui::Button::setSize(sf::Vector2f size)
     this->background.setScale(this->getSize().x / this->backgroundTexture.getSize().x,
                               this->getSize().y / this->backgroundTexture.getSize().y);
 
-    this->text.setCharacterSize(std::ceil(this->backgroundTexture.getSize().y * this->background.getScale().y * .5f));
-    this->setPosition(this->getPosition());
+    this->text->setSize(this->getSize());
 }
 
 void my_gui::Button::setPosition(sf::Vector2f position)
 {
     this->position = position;
     this->background.setPosition(this->getPosition());
-    this->text.setPosition(this->background.getPosition().x +
-                           this->getSize().x * .5f -
-                           (this->text.getString().getSize() * this->text.getCharacterSize() * .25f),
-                           this->background.getPosition().y +
-                           this->getSize().y * .5f -
-                           this->text.getCharacterSize() * .5f);
+    this->text->setPosition(this->getPosition());
 }
 
 void my_gui::Button::setViewState(bool state) { this->viewState = state; }
@@ -105,7 +93,7 @@ void my_gui::Button::draw(sf::RenderWindow& window)
     else /*(this->currentAction == TypeAction::Idle)*/ { this->background.setColor(this->idleColor); }
 
     this->getWindow()->draw(this->background);
-    this->getWindow()->draw(this->text);
+    this->text->draw(*this->getWindow());
 }
 
 void my_gui::Button::checkOnEvent(sf::Event event)
