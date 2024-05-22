@@ -10,7 +10,8 @@ private:
     sf::Sprite cellSprite;
     sf::Texture cellTexture;
 public:
-    Cell(sf::Vector2f size,
+    Cell(sf::RenderWindow& window,
+         sf::Vector2f size,
          sf::Vector2f position,
          char* pathCellTexture
          );

@@ -52,7 +52,7 @@ void MenuPage::checkOnEvent(sf::Event& event, sf::Vector2i mousePosition)
         textPlay.setFillColor(sf::Color::Green);
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            pageView = TypePage::Game;
+            pageView = TypePage::GamePageType;
         }
     } else
     {
@@ -65,7 +65,7 @@ void MenuPage::checkOnEvent(sf::Event& event, sf::Vector2i mousePosition)
         textSettings.setFillColor(sf::Color::Green);
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            pageView = TypePage::Settings;
+            pageView = TypePage::SettingsPageType;
         }
     } else
     {
@@ -78,7 +78,7 @@ void MenuPage::checkOnEvent(sf::Event& event, sf::Vector2i mousePosition)
         textRules.setFillColor(sf::Color::Green);
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            pageView = TypePage::Rules;
+            pageView = TypePage::RulesPageType;
         }
     } else
     {
@@ -91,7 +91,7 @@ void MenuPage::checkOnEvent(sf::Event& event, sf::Vector2i mousePosition)
         textExit.setFillColor(sf::Color::Green);
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            pageView = TypePage::Exit;
+            pageView = TypePage::ExitPageType;
         }
     } else
     {

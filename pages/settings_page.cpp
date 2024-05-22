@@ -28,7 +28,7 @@ void SettingsPage::checkOnEvent(sf::Event& event, sf::Vector2i mousePosition)
         textBack.setFillColor(sf::Color::Green);
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            pageView = TypePage::Menu;
+            pageView = TypePage::MenuPageType;
         }
     } else
     {

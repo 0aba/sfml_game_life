@@ -1,8 +1,8 @@
 #ifndef GAME_LIFE_GAME_PAGE_HPP
 #define GAME_LIFE_GAME_PAGE_HPP
 
-
 #include "Utils.hpp"
+
 
 class GamePage : public Page
 {

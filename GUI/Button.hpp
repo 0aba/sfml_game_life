@@ -13,9 +13,6 @@ namespace my_gui
         sf::Sprite background;
         sf::Texture backgroundTexture;
 
-        //sf::Color textColor;
-        //sf::Font font;
-        //sf::Text text1; //todo! заменить в будующим на MultilineTextArea !!!!!!
         my_gui::MultilineTextArea* text;
 
         void (*clickEvent)(sf::RenderWindow* window, Widget* widget){};

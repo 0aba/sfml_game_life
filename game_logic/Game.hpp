@@ -40,7 +40,7 @@ struct Coords
 
 };
 
-enum     TypeCell {
+enum TypeCell {
     LivingCell      = '#',
     DeadCell        = '_',
     Wall            = 'W',
@@ -56,10 +56,6 @@ private:
     u16 __arenaSizeX = DEFAULT_SIDE_SIZE;
     u16 __arenaSizeY = DEFAULT_SIDE_SIZE;
 
-    u16 __timeStep = DEFAULT_TIME_STEP;
-
-    u16 __amountIterations = DEFAULT_ITERATIONS;
-
     u16 __LivingPercent = DEFAULT_LIVING;
 
     u16 __WallPercent = DEFAULT_SPECIAL_CELL;
@@ -73,15 +69,9 @@ private:
     TypeCell getRandomCell();
 public:
     static const short DEFAULT_SIDE_SIZE      = 32;
-    static const short DEFAULT_TIME_STEP      = 1000;
-    static const short DEFAULT_ITERATIONS     = 5;
     static const short DEFAULT_LIVING         = 35;
     static const short DEFAULT_SPECIAL_CELL   = 5;
 
-    static const short MIN_VALUE_TIME_STEP    = 1000;
-    static const short MAX_VALUE_TIME_STEP    = 10000;
-    static const short MIN_VALUE_ITERATIONS   = 1;
-    static const short MAX_VALUE_ITERATIONS   = 10;
     static const short MIN_VALUE_LIVING       = 10;
     static const short MAX_VALUE_LIVING       = 85;
     static const short MIN_VALUE_SPECIAL_CELL = 1;
@@ -91,12 +81,6 @@ public:
     u16 getArenaSizeX() const;
     void setArenaSizeY(u16 size);
     u16 getArenaSizeY() const;
-
-    void setTimeStep(u16 timeStep);
-    u16 getTimeStep() const;
-
-    void setAmountIterations(u16 iterations);
-    u16 getAmountIterations() const;
 
     void setLivingPercent(u16 percent);
     u16 getLivingPercent() const;
@@ -109,6 +93,8 @@ public:
     u16 getSupportPercent() const;
 
     void developmentOfLife();
+
+    void setCell(Coords coord, TypeCell type);
 
     void setRandomMapGame();
 

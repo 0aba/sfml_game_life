@@ -6,11 +6,11 @@
 
 enum TypePage
 {
-    Menu     = 0,
-    Game     = 1,
-    Settings = 2,
-    Rules    = 3,
-    Exit     = 4
+    MenuPageType     = 0,
+    GamePageType     = 1,
+    SettingsPageType = 2,
+    RulesPageType    = 3,
+    ExitPageType     = 4
 };
 
 class Page // todo! change logic page

@@ -149,5 +149,5 @@ void my_gui::ContextMenu::checkOnEvent(sf::Event event)
 
 my_gui::ContextMenu::~ContextMenu()
 {
-    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) {delete *i;}
+    for (auto i = this->elements.begin(); i != this->elements.end(); ++i) { delete *i; }
 }

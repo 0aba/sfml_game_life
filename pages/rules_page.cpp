@@ -18,7 +18,7 @@ RulesPage::RulesPage(TypePage &pageView) : Page(pageView)
                        'S' - Life support cell, supports the life of cells,\n\
                        even if condition (rule 1) is not met.\n\
 \
-                       Rules:\n\
+                       RulesPageType:\n\
                        ~ If a dead cell is surrounded by exactly 3 living ones,\n\
                          then it becomes alive.\n\
                        ~ If a living cell is surrounded by 2 or 3 living ones, \n\
@@ -52,7 +52,7 @@ void RulesPage::checkOnEvent(sf::Event &event, sf::Vector2i mousePosition)
         textBack.setFillColor(sf::Color::Green);
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            pageView = TypePage::Menu;
+            pageView = TypePage::MenuPageType;
         }
     } else
     {

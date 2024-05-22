@@ -1,10 +1,13 @@
 #include "Cell.hpp"
 
 
-Cell::Cell(sf::Vector2f size,
+Cell::Cell(sf::RenderWindow& window,
+           sf::Vector2f size,
            sf::Vector2f position,
            char *pathCellTexture)
 {
+    this->setWindow(window);
+
     this->loadCellTexture(pathCellTexture);
 
     ((Cell*) this)->setSize(size);

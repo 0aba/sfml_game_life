@@ -3,10 +3,10 @@
 #include "./pages/menu_page.hpp" // todo! change
 #include "./pages/rules_page.hpp" // todo! change
 #include "./pages/settings_page.hpp" // todo! change
-#include "./pages/game_page.hpp." // todo! change
+#include "./pages/game_page.hpp" // todo! change
 
-//#include "GUI/ContextMenu.hpp"
-#include "GUI/ContextMenuElement.hpp"
+#include "game_logic/GameWidget.hpp"
+
 
 int main()
 {
@@ -15,10 +15,21 @@ int main()
     sf::Font font; //todo! test
     font.loadFromFile(FRONT_TEXT_PATH); //todo! test
 
+    sf::Vector2f s (400, 400);
+    sf::Vector2f p (30, 20);
+    sf::RectangleShape bg;
+    bg.setSize(s);
+    bg.setPosition(p);
+
+    GameWidget* g = new GameWidget(&window,
+             s,
+             p,
+             10,
+             10);
 
     sf::Vector2i mousePosition;
 
-    TypePage pageViewChange = TypePage::Menu;
+    TypePage pageViewChange = TypePage::MenuPageType;
     Page* viewPage;
     MenuPage menuPage(pageViewChange);
     GamePage gamePage(pageViewChange);
@@ -29,11 +40,11 @@ int main()
     {
         switch (pageViewChange)
         {
-            case Menu: viewPage = &menuPage; break;
-            case Game: viewPage = &gamePage; break;
-            case Settings: viewPage = &settingsPage; break;
-            case Rules: viewPage = &rulesPage; break;
-            case Exit: return EXIT_SUCCESS;
+            case MenuPageType: viewPage = &menuPage; break;
+            case GamePageType: viewPage = &gamePage; break;
+            case SettingsPageType: viewPage = &settingsPage; break;
+            case RulesPageType: viewPage = &rulesPage; break;
+            case ExitPageType: return EXIT_SUCCESS;
         }
 
         sf::Event event;
