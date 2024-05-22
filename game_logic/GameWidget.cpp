@@ -1,7 +1,6 @@
 #include "GameWidget.hpp"
 
 
-
 GameWidget::GameWidget(sf::RenderWindow* window,
                        sf::Vector2f size,
                        sf::Vector2f position,
@@ -193,12 +192,35 @@ GameWidget::~GameWidget()
 
 void GameWidget::setSize(sf::Vector2f size)
 {
+    this->size = size;
 
+    this->sizeCell = sf::Vector2f (this->getSize().x / this->amountCellOnX,
+                                   (this->getSize().y * .89f) / this->amountCellOnY);
+
+    this->livingCell->setSize(this->sizeCell);
+    this->deadCell->setSize(this->sizeCell);
+    this->wall->setSize(this->sizeCell);
+    this->killingCell->setSize(this->sizeCell);
+    this->lifeSupportCell->setSize(this->sizeCell);
+
+    this->buttonGame->setSize(sf::Vector2f((this->getSize().x * .95f) / 2,
+                                           this->getSize().y * .099f));
+    this->sliderSpeed->setSize(sf::Vector2f((this->getSize().x * .95f) / 2,
+                                            this->getSize().y * .099f));
 }
 
 void GameWidget::setPosition(sf::Vector2f position)
 {
-
+    this->buttonGame->setPosition(sf::Vector2f(this->getPosition().x,
+                                               this->getPosition().y -
+                                               this->getSize().y +
+                                               this->getSize().y * .099f));
+    this->sliderSpeed->setPosition(sf::Vector2f(this->getPosition().x +
+                                                this->getSize().x -
+                                                (this->getSize().x * .95f) / 2,
+                                                this->getPosition().y -
+                                                this->getSize().y +
+                                                this->getSize().y * .099f));
 }
 
 void GameWidget::setViewState(bool state) { this->viewState = state; }
