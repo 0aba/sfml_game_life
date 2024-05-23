@@ -9,25 +9,30 @@ GameWidget::GameWidget(sf::RenderWindow* window,
 {
     this->setWindow(*window);
 
-    this->amountCellOnX = amountCellOnX; //this->setAmountCellOnX(amountCellOnX);
-    this->amountCellOnY = amountCellOnY; //this->setAmountCellOnY(amountCellOnY);
+    this->game = new Game();
+
+    this->amountCellOnX = amountCellOnX;
+    this->amountCellOnY = amountCellOnY;
+
+
 
     this->buttonGame = new my_gui::Button(*this->getWindow(),
-                                          sf::Vector2f (0, 0),
-                                          sf::Vector2f (0, 0),
+                                          sf::Vector2f (1, 1),
+                                          sf::Vector2f (1, 1),
                                           nullptr,
                                           nullptr,
                                           "run",
-                                          [] (sf::RenderWindow* window, Widget* widget) { ((GameWidget*) widget)->clickButtonGame(window, widget);},
+                                          this,
+                                          GameWidget::clickButtonGame,
                                           sf::Color(50, 50, 50),
                                           sf::Color(100, 100, 100),
                                           sf::Color(150, 150, 150),
                                           sf::Color(200, 200, 200)
                                         );
-
+//                                           [] (Widget* contextCalled, my_gui::Button* thisButton){ ((GameWidget*) contextCalled)->clickButtonGame(contextCalled, thisButton); },
     this->sliderSpeed = new my_gui::HSlider(*this->getWindow(),
-                                            sf::Vector2f (0, 0),
-                                            sf::Vector2f (0, 0),
+                                            sf::Vector2f (100, 25),
+                                            sf::Vector2f (1, 1),
                                             nullptr,
                                             nullptr,
                                             nullptr,
@@ -43,8 +48,8 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                             );
 
     this->contextMenuCell = new my_gui::ContextMenu(*this->getWindow(),
-                                                    sf::Vector2f (0, 0),
-                                                    sf::Vector2f (0, 0),
+                                                    sf::Vector2f (1, 1),
+                                                    sf::Vector2f (1, 1),
                                                     nullptr
                                                     );
 
@@ -129,30 +134,33 @@ GameWidget::GameWidget(sf::RenderWindow* window,
     ((GameWidget*) this)->setPosition(position);
 }
 
-void GameWidget::clickButtonGame(sf::RenderWindow* window, Widget* widget)
+void GameWidget::clickButtonGame(Widget* contextCalled, my_gui::Button* thisButton)
 {
-    if (this->gameRunStatus)
+    //thisButton->setText("is work!!");
+
+
+    if (((GameWidget*) contextCalled)->gameRunStatus)
     {
-        this->runDeveloperLife = new std::jthread(
-                [this] (const std::stop_token& token) {
+        ((GameWidget*) contextCalled)->runDeveloperLife->request_stop();
+        ((my_gui::Button*) thisButton)->setText("stop");
+
+        ((GameWidget*) contextCalled)->gameRunStatus = false;
+    }
+    else /*if (!this->gameRunStatus)*/
+    {
+        ((GameWidget*) contextCalled)->runDeveloperLife = new std::jthread([contextCalled] (const std::stop_token& token) {
                     while (true)
                     {
                         if (token.stop_requested()) { return; }
 
-                        std::this_thread::sleep_for(std::chrono::seconds (this->sliderSpeed->getValuesPointer()));
+                        std::this_thread::sleep_for(std::chrono::seconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
 
-                        this->game->developmentOfLife();
+                        ((GameWidget*) contextCalled)->game->developmentOfLife();
                     }
                 });
 
-        this->buttonGame->setText("run");
-        this->gameRunStatus = false;
-    }
-    else /*if (!this->gameRunStatus)*/
-    {
-        this->runDeveloperLife->request_stop();
-        this->buttonGame->setText("stop");
-        this->gameRunStatus = true;
+        ((my_gui::Button*) thisButton)->setText("run");
+        ((GameWidget*) contextCalled)->gameRunStatus = true;
     }
 }
 
@@ -213,29 +221,33 @@ void GameWidget::setSize(sf::Vector2f size)
 
 void GameWidget::setPosition(sf::Vector2f position)
 {
+    this->position = position;
+    // todo! error
     this->buttonGame->setPosition(sf::Vector2f(this->getPosition().x,
-                                               this->getPosition().y -
-                                               this->getSize().y +
+                                               this->getPosition().y +
+                                               this->getSize().y -
                                                this->getSize().y * .099f));
     this->sliderSpeed->setPosition(sf::Vector2f(this->getPosition().x +
                                                 this->getSize().x -
                                                 (this->getSize().x * .95f) / 2,
-                                                this->getPosition().y -
-                                                this->getSize().y +
+                                                this->getPosition().y +
+                                                this->getSize().y -
                                                 this->getSize().y * .099f));
 }
 
 void GameWidget::setViewState(bool state) { this->viewState = state; }
 
-void GameWidget::draw(sf::RenderWindow &window)
+void GameWidget::draw(sf::RenderWindow& window)
 {
     if(!this->getViewState()) { return; }
+
+    this->setWindow(window);
 
     for (int x = 0; x < this->amountCellOnY; ++x)
     {
         for (int y = 0; y < this->amountCellOnX; ++y)
         {
-            TypeCell typeCurrentCell = this->game->getCell({(u16) y, (u16) x});
+            TypeCell typeCurrentCell = this->game->getCell(Coords {(u16) y, (u16) x});
 
             Cell* viewCell;
 
@@ -288,7 +300,6 @@ void GameWidget::checkOnEvent(sf::Event event)
     }
 
     if (this->selected) { this->contextMenuCell->draw(*this->getWindow()); }
-
 
     this->sliderSpeed->checkOnEvent(event);
     this->buttonGame->checkOnEvent(event);

@@ -15,7 +15,8 @@ namespace my_gui
 
         my_gui::MultilineTextArea* text;
 
-        void (*clickEvent)(sf::RenderWindow* window, Widget* widget){};
+        my_gui::Widget* contextCalled;
+        void (*clickEvent)(Widget* contextCalled, Button* thisButton);
 
         TypeAction currentAction = TypeAction::Idle;
         sf::Color idleColor;
@@ -28,7 +29,8 @@ namespace my_gui
                char* pathBackgroundTexture,
                char* pathFont,
                sf::String text,
-               void (*clickEvent)(sf::RenderWindow* window, Widget* widget),
+               my_gui::Widget* contextCalled,
+               void (*clickEvent)(Widget* contextCalled, Button* thisButton),
                sf::Color textColor,
                sf::Color idleColor,
                sf::Color hoverColor,
@@ -46,7 +48,7 @@ namespace my_gui
         void setHoverColor(sf::Color hoverColor);
         void setActiveColor(sf::Color activeColor);
 
-        void setClickEvent(void (*clickEvent)(sf::RenderWindow* window, Widget* widget));
+        void setClickEvent(void (*clickEvent)(Widget* contextCalled, Button* thisButton), my_gui::Widget* contextCalled);
 
         void loadBackgroundTexture(char* path);
 

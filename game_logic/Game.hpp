@@ -51,16 +51,16 @@ enum TypeCell {
 class Game
 {
 private:
-    mapFilledCell __mapGame;
+    mapFilledCell _mapGame;
 
-    u16 __arenaSizeX = DEFAULT_SIDE_SIZE;
-    u16 __arenaSizeY = DEFAULT_SIDE_SIZE;
+    u16 _arenaSizeX = DEFAULT_SIDE_SIZE;
+    u16 _arenaSizeY = DEFAULT_SIDE_SIZE;
 
-    u16 __LivingPercent = DEFAULT_LIVING;
+    u16 _livingPercent = DEFAULT_LIVING;
 
-    u16 __WallPercent = DEFAULT_SPECIAL_CELL;
-    u16 __KillingPercent = DEFAULT_SPECIAL_CELL;
-    u16 __SupportPercent = DEFAULT_SPECIAL_CELL;
+    u16 _wallPercent = DEFAULT_SPECIAL_CELL;
+    u16 _killingPercent = DEFAULT_SPECIAL_CELL;
+    u16 _supportPercent = DEFAULT_SPECIAL_CELL;
 
     Coords   getCoordAfterOffset(const Coords& CurrentCoords, const Offset& OffsetCoords);
 

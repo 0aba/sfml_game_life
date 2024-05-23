@@ -47,8 +47,10 @@ void my_gui::HSlider::setSize(sf::Vector2f size)
 
     this->textPopup.setCharacterSize(this->textMin.getCharacterSize());
 
-    this->pointer.setScale(this->pointer.getScale().x / this->texturePointer.getSize().x * this->getSize().y * .5f,
-                           this->pointer.getScale().y / this->texturePointer.getSize().y * this->getSize().y * 1.5f);
+    // todo! error resize !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /// this->pointer.getScale().x Остается старым !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    this->pointer.setScale( this->getSize().y * .5f / this->texturePointer.getSize().x,
+                            this->getSize().y * 1.5f / this->texturePointer.getSize().y);
 
 
     int minValueSize = std::to_string(this->getValueMin()).size();
@@ -56,7 +58,7 @@ void my_gui::HSlider::setSize(sf::Vector2f size)
 
     this->popupPointer.setScale(this->textPopup.getCharacterSize() * .75f *
                                 (minValueSize > maxValueSize ? minValueSize : maxValueSize) / this->texturePopupPointer.getSize().y,
-                                this->popupPointer.getScale().y / this->texturePopupPointer.getSize().y * this->textPopup.getCharacterSize() * 1.5f);
+                                this->textPopup.getCharacterSize() * 1.5f / this->texturePopupPointer.getSize().y );
     this->setPosition(this->position);
 }
 

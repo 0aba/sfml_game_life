@@ -23,7 +23,7 @@ private:
 
     bool gameRunStatus = false;
     my_gui::Button* buttonGame;
-    void clickButtonGame(sf::RenderWindow* window, Widget* widget);
+    static void clickButtonGame(Widget* contextCalled, my_gui::Button* thisButton);
     std::jthread* runDeveloperLife;
 
     my_gui::HSlider* sliderSpeed;

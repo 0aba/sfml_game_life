@@ -15,13 +15,15 @@ int main()
     sf::Font font; //todo! test
     font.loadFromFile(FRONT_TEXT_PATH); //todo! test
 
-    sf::Vector2f s (400, 400);
-    sf::Vector2f p (30, 20);
-    sf::RectangleShape bg;
-    bg.setSize(s);
-    bg.setPosition(p);
+    sf::Vector2f s (600, 400);
+    sf::Vector2f p (50, 40);
+    //sf::RectangleShape bg;
+    //bg.setSize(s);
+   // bg.setPosition(p);
 
-    GameWidget* g = new GameWidget(&window,
+
+
+    GameWidget g = GameWidget(&window,
              s,
              p,
              10,
@@ -61,9 +63,11 @@ int main()
             }
 
             viewPage->checkOnEvent(event, mousePosition);
+            g.checkOnEvent(event);
         }
 
         viewPage->drawOnWindow(window);
+        g.draw(window);
 
         window.display();
 

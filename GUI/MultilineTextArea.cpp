@@ -17,7 +17,7 @@ my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
 
     //((MultilineTextArea*) this)->setSize(size);
     this->size = size;
-    this->setText(text);
+    this->setText(this->text);
 
 
     ((MultilineTextArea*) this)->setPosition(position);
@@ -28,14 +28,14 @@ void my_gui::MultilineTextArea::loadFont(const char *pathFont)
     if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
     else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
 
-    this->viewText.setFont(this->font);
+    this->viewMultilineText.setFont(this->font);
 }
 
 void my_gui::MultilineTextArea::setTextColor(sf::Color textColor)
 {
     this->textColor = textColor;
 
-    this->viewText.setFillColor(this->textColor);
+    this->viewMultilineText.setFillColor(this->textColor);
 }
 
 void my_gui::MultilineTextArea::setText(sf::String text)
@@ -49,40 +49,40 @@ sf::String my_gui::MultilineTextArea::getText() { return this->text; }
 void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
 {
     this->size = size;
-    this->viewText.setString(this->text);
+    this->viewMultilineText.setString(this->text);
     if (this->text.getSize() == 0) { return; }
 
     short newSize = 1;
-    this->viewText.setCharacterSize(newSize);
+    this->viewMultilineText.setCharacterSize(newSize);
 
     this->amountCharOnLine = this->text.getSize();
     this->amountLines = 1;
 
     while (newSize < size.y)
     {
-        int averageCharWidth = std::ceil(this->viewText.getGlobalBounds().width / this->viewText.getString().getSize());
+        int averageCharWidth = std::ceil(this->viewMultilineText.getGlobalBounds().width / this->viewMultilineText.getString().getSize());
         if (averageCharWidth == 0) { averageCharWidth = 1; }
 
         this->amountCharOnLine = this->getSize().x / averageCharWidth;
 
-        this->amountLines = (this->viewText.getString().getSize() / this->amountCharOnLine) + 1;
+        this->amountLines = (this->viewMultilineText.getString().getSize() / this->amountCharOnLine) + 1;
         if (amountLines == 0) { amountLines = 1; }
 
         // todo! доработать
-        if ((this->viewText.getGlobalBounds().height * this->amountLines * 1.25f) > this->getSize().y)
+        if ((this->viewMultilineText.getGlobalBounds().height * this->amountLines * 1.25f) > this->getSize().y)
         {
             --newSize;
-            this->viewText.setCharacterSize(newSize);
-            averageCharWidth = this->viewText.getGlobalBounds().width / this->viewText.getString().getSize();
+            this->viewMultilineText.setCharacterSize(newSize);
+            averageCharWidth = this->viewMultilineText.getGlobalBounds().width / this->viewMultilineText.getString().getSize();
 
             this->amountCharOnLine = this->getSize().x / averageCharWidth;
 
-            this->amountLines = (this->viewText.getString().getSize() / this->amountCharOnLine) + 1;
+            this->amountLines = (this->viewMultilineText.getString().getSize() / this->amountCharOnLine) + 1;
             break;
         }
 
         ++newSize;
-        this->viewText.setCharacterSize(newSize);
+        this->viewMultilineText.setCharacterSize(newSize);
     }
 
     sf::String newViewString;
@@ -93,23 +93,23 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
 
         lineViewString += this->text[i];
 #       define SPACE_IN_VIEW "_"
-        this->viewText.setString(lineViewString + SPACE_IN_VIEW);
+        this->viewMultilineText.setString(lineViewString + SPACE_IN_VIEW);
 
-        if  (this->viewText.getGlobalBounds().width > this->getSize().x || (i + 1) == this->text.getSize())
+        if  (this->viewMultilineText.getGlobalBounds().width > this->getSize().x || (i + 1) == this->text.getSize())
         {
             newViewString += lineViewString + "\n";
             lineViewString.clear();
         }
     }
 
-    this->viewText.setString(newViewString);
+    this->viewMultilineText.setString(newViewString);
 }
 
 void my_gui::MultilineTextArea::setPosition(sf::Vector2f position)
 {
     this->position = position;
 
-    this->viewText.setPosition(this->position);
+    this->viewMultilineText.setPosition(this->position);
 }
 
 void my_gui::MultilineTextArea::setViewState(bool state) { this->viewState = state; }
@@ -119,7 +119,7 @@ void my_gui::MultilineTextArea::draw(sf::RenderWindow &window)
     if(!this->getViewState()) { return; }
     this->setWindow(window);
 
-    this->getWindow()->draw(this->viewText);
+    this->getWindow()->draw(this->viewMultilineText);
 }
 
 void my_gui::MultilineTextArea::checkOnEvent(sf::Event event) { /*todo! add events???*/ }

@@ -12,7 +12,7 @@ namespace my_gui
         sf::String text;
         sf::Font font;
         sf::Color textColor;
-        sf::Text viewText;
+        sf::Text viewMultilineText;
 
         unsigned short amountCharOnLine;
         unsigned short amountLines;

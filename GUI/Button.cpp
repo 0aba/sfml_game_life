@@ -8,7 +8,8 @@ my_gui::Button::Button(sf::RenderWindow& window,
                        char* pathBackgroundTexture,
                        char* pathFont,
                        sf::String text,
-                       void (*clickEvent)(sf::RenderWindow* window, Widget* widget),
+                       my_gui::Widget* contextCalled,
+                       void (*clickEvent)(Widget* contextCalled, Button* thisButton),
                        sf::Color textColor,
                        sf::Color idleColor,
                        sf::Color hoverColor,
@@ -25,7 +26,7 @@ my_gui::Button::Button(sf::RenderWindow& window,
 
     this->loadBackgroundTexture(pathBackgroundTexture);
     this->backgroundTexture.setSmooth(true);
-    this->setClickEvent(clickEvent);
+    this->setClickEvent(clickEvent, contextCalled);
     this->setIdleColor(idleColor);
     this->setHoverColor(hoverColor);
     this->setActiveColor(activeColor);
@@ -54,7 +55,11 @@ void my_gui::Button::setHoverColor(sf::Color hoverColor) { this->hoverColor = ho
 
 void my_gui::Button::setActiveColor(sf::Color activeColor) { this->activeColor = activeColor; }
 
-void my_gui::Button::setClickEvent(void (*clickEvent)(sf::RenderWindow* window, Widget* widget)) { this->clickEvent = clickEvent; }
+void my_gui::Button::setClickEvent(void (*clickEvent)(Widget* contextCalled, Button* thisButton), my_gui::Widget* contextCalled)
+{
+    this->contextCalled = contextCalled;
+    this->clickEvent = clickEvent;
+}
 
 void my_gui::Button::loadBackgroundTexture(char *path)
 {
@@ -106,7 +111,7 @@ void my_gui::Button::checkOnEvent(sf::Event event)
                                                     sf::Mouse::getPosition(*this->getWindow()).y))
     {
         this->currentAction = TypeAction::Activated;
-        clickEvent(this->getWindow(), this);
+        clickEvent(contextCalled, this);
     }
     else if (this->background.getGlobalBounds().contains(sf::Mouse::getPosition(*this->getWindow()).x,
                                                          sf::Mouse::getPosition(*this->getWindow()).y))
@@ -115,4 +120,5 @@ void my_gui::Button::checkOnEvent(sf::Event event)
     }
     else  { this->currentAction = TypeAction::Idle; }
 }
+
 
