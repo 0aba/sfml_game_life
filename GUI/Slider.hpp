@@ -19,9 +19,9 @@ namespace my_gui
 
         sf::Font font;
         sf::Color textColor;
-        sf::Text textMin; //todo! заменить в будующим на MultilineTextArea ??????
-        sf::Text textMax; //todo! заменить в будующим на MultilineTextArea ??????
-        sf::Text textPopup; //todo! заменить в будующим на MultilineTextArea ??????
+        sf::Text textMin;
+        sf::Text textMax;
+        sf::Text textPopup;
 
         float hOffsetPercentageViewPopup = .5f;
 
@@ -29,7 +29,8 @@ namespace my_gui
         int maxValue = 100;
         int value = minValue;
 
-        void (*changeEvent)(sf::RenderWindow* window, my_gui::Widget* widget);
+        my_gui::Widget* contextCalled;
+        void (*changeEvent)(Widget* contextCalled, Slider* thisSlider);
 
         TypeAction currentAction = TypeAction::Idle;
 
@@ -42,7 +43,8 @@ namespace my_gui
                char* pathTexturePointer,
                char* pathTexturePopupPointer,
                float hOffsetPercentageViewPopup,
-               void (*changeEvent)(sf::RenderWindow* window, Widget* widget),
+               my_gui::Widget* contextCalled,
+               void (*changeEvent)(Widget* contextCalled, Slider* thisSlider),
                sf::Color textColor,
                sf::Color idleColor,
                sf::Color hoverColor,
@@ -58,7 +60,7 @@ namespace my_gui
         void setHoverColor(sf::Color hoverColor);
         void setActiveColor(sf::Color activeColor);
 
-        void setChangeEvent(void (*changeEvent)(sf::RenderWindow* window, Widget* widget));
+        void setChangeEvent(void (*changeEvent)(Widget* contextCalled, Slider* thisSlider), my_gui::Widget* contextCalled);
 
         void loadTexturePopupPointer(char* path);
         void loadTexturePointer(char* path);

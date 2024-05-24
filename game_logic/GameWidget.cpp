@@ -14,14 +14,12 @@ GameWidget::GameWidget(sf::RenderWindow* window,
     this->amountCellOnX = amountCellOnX;
     this->amountCellOnY = amountCellOnY;
 
-
-
     this->buttonGame = new my_gui::Button(*this->getWindow(),
                                           sf::Vector2f (1, 1),
                                           sf::Vector2f (1, 1),
                                           nullptr,
                                           nullptr,
-                                          "run",
+                                          "game button",
                                           this,
                                           GameWidget::clickButtonGame,
                                           sf::Color(50, 50, 50),
@@ -29,7 +27,14 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                           sf::Color(150, 150, 150),
                                           sf::Color(200, 200, 200)
                                         );
-//                                           [] (Widget* contextCalled, my_gui::Button* thisButton){ ((GameWidget*) contextCalled)->clickButtonGame(contextCalled, thisButton); },
+
+
+    this->contextMenuCell = new my_gui::ContextMenu(*this->getWindow(),
+                                                    sf::Vector2f (100, 100),
+                                                    sf::Vector2f (1, 1),
+                                                    nullptr
+                                                    );
+
     this->sliderSpeed = new my_gui::HSlider(*this->getWindow(),
                                             sf::Vector2f (100, 25),
                                             sf::Vector2f (1, 1),
@@ -38,26 +43,21 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                             nullptr,
                                             nullptr,
                                             .5f,
-                                            [] (sf::RenderWindow* window, Widget* widget) { /*None!!!*/ },
+                                            this,
+                                            [] (my_gui::Widget* contextCalled, my_gui::Slider* thisSlider) { /*None!!!*/ },
                                             sf::Color(50, 50, 50),
                                             sf::Color(100, 100, 100),
                                             sf::Color(150, 150, 150),
                                             sf::Color(200, 200, 200),
                                             GameWidget::MIN_SLIDER_VALUE,
                                             GameWidget::MAX_SLIDER_VALUE
-                                            );
-
-    this->contextMenuCell = new my_gui::ContextMenu(*this->getWindow(),
-                                                    sf::Vector2f (1, 1),
-                                                    sf::Vector2f (1, 1),
-                                                    nullptr
-                                                    );
-
+    );
     this->contextMenuCell->createElement(nullptr,
                                          "./resources_GUI/living_cell.png",
                                          nullptr,
                                          "live cell",
-                                         [] (sf::RenderWindow* window, Widget* widget) { ((GameWidget *) widget)->changeCell(TypeCell::LivingCell); },
+                                         this,
+                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::LivingCell); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -67,7 +67,8 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          "./resources_GUI/dead_cell.png",
                                          nullptr,
                                          "dead cell",
-                                         [] (sf::RenderWindow* window, Widget* widget) { ((GameWidget *) widget)->changeCell(TypeCell::DeadCell); },
+                                         this,
+                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::DeadCell); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -77,7 +78,8 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          "./resources_GUI/wall_cell.png",
                                          nullptr,
                                          "wall cell",
-                                         [] (sf::RenderWindow* window, Widget* widget) { ((GameWidget *) widget)->changeCell(TypeCell::Wall); },
+                                         this,
+                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::Wall); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -87,7 +89,8 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          "./resources_GUI/killing_cell.png",
                                          nullptr,
                                          "killing cell",
-                                         [] (sf::RenderWindow* window, Widget* widget) { ((GameWidget *) widget)->changeCell(TypeCell::KillingCell); },
+                                         this,
+                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::KillingCell); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -97,7 +100,8 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          "./resources_GUI/support_cell.png",
                                          nullptr,
                                          "support cell",
-                                         [] (sf::RenderWindow* window, Widget* widget) { ((GameWidget *) widget)->changeCell(TypeCell::LifeSupportCell); },
+                                         this,
+                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::LifeSupportCell); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -105,13 +109,13 @@ GameWidget::GameWidget(sf::RenderWindow* window,
     );
 
     this->livingCell = new Cell(*this->getWindow(),
-                                sf::Vector2f (0, 0),
-                                sf::Vector2f (0, 0),
+                                sf::Vector2f (1, 1),
+                                sf::Vector2f (1, 1),
                                 "./resources_GUI/living_cell.png"
                                 );
     this->deadCell = new Cell(*this->getWindow(),
-                              sf::Vector2f (0, 0),
-                              sf::Vector2f (0, 0),
+                              sf::Vector2f (1, 1),
+                              sf::Vector2f (1, 1),
                               "./resources_GUI/dead_cell.png"
                               );
     this->wall = new Cell(*this->getWindow(),
@@ -136,13 +140,10 @@ GameWidget::GameWidget(sf::RenderWindow* window,
 
 void GameWidget::clickButtonGame(Widget* contextCalled, my_gui::Button* thisButton)
 {
-    //thisButton->setText("is work!!");
-
-
     if (((GameWidget*) contextCalled)->gameRunStatus)
     {
         ((GameWidget*) contextCalled)->runDeveloperLife->request_stop();
-        ((my_gui::Button*) thisButton)->setText("stop");
+        ((my_gui::Button*) thisButton)->setText("run");
 
         ((GameWidget*) contextCalled)->gameRunStatus = false;
     }
@@ -153,18 +154,18 @@ void GameWidget::clickButtonGame(Widget* contextCalled, my_gui::Button* thisButt
                     {
                         if (token.stop_requested()) { return; }
 
-                        std::this_thread::sleep_for(std::chrono::seconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
+                        std::this_thread::sleep_for(std::chrono::milliseconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
 
                         ((GameWidget*) contextCalled)->game->developmentOfLife();
                     }
                 });
 
-        ((my_gui::Button*) thisButton)->setText("run");
+        ((my_gui::Button*) thisButton)->setText("stop");
         ((GameWidget*) contextCalled)->gameRunStatus = true;
     }
 }
 
-void GameWidget::changeCell(TypeCell type) { this->game->setCell(this->selectedCellCoord, type); }
+void GameWidget::changeCell(GameWidget* gameWidget, TypeCell type) { gameWidget->game->setCell(gameWidget->selectedCellCoord, type); }
 
 void GameWidget::setAmountCellOnX(unsigned short amount)
 {
@@ -203,7 +204,7 @@ void GameWidget::setSize(sf::Vector2f size)
     this->size = size;
 
     this->sizeCell = sf::Vector2f (this->getSize().x / this->amountCellOnX,
-                                   (this->getSize().y * .89f) / this->amountCellOnY);
+                                   (this->getSize().y * .8f) / this->amountCellOnY);
 
     this->livingCell->setSize(this->sizeCell);
     this->deadCell->setSize(this->sizeCell);
@@ -215,14 +216,13 @@ void GameWidget::setSize(sf::Vector2f size)
                                            this->getSize().y * .099f));
     this->sliderSpeed->setSize(sf::Vector2f((this->getSize().x * .95f) / 2,
                                             this->getSize().y * .099f));
-    this->contextMenuCell->setSize(sf::Vector2f(this->getSize().x * .15f,
-                                                this->getSize().y * .15f));
+    this->contextMenuCell->setSize(sf::Vector2f(this->getSize().x * .33f,
+                                                this->getSize().y * .33f));
 }
 
 void GameWidget::setPosition(sf::Vector2f position)
 {
     this->position = position;
-    // todo! error
     this->buttonGame->setPosition(sf::Vector2f(this->getPosition().x,
                                                this->getPosition().y +
                                                this->getSize().y -
@@ -243,11 +243,11 @@ void GameWidget::draw(sf::RenderWindow& window)
 
     this->setWindow(window);
 
-    for (int x = 0; x < this->amountCellOnY; ++x)
+    for (int y = 0; y < this->amountCellOnY; ++y)
     {
-        for (int y = 0; y < this->amountCellOnX; ++y)
+        for (int x = 0; x < this->amountCellOnX; ++x)
         {
-            TypeCell typeCurrentCell = this->game->getCell(Coords {(u16) y, (u16) x});
+            TypeCell typeCurrentCell = this->game->getCell(Coords {(u16) x, (u16) y});
 
             Cell* viewCell;
 
@@ -261,10 +261,14 @@ void GameWidget::draw(sf::RenderWindow& window)
             }
 
             viewCell->setPosition(sf::Vector2f (this->getPosition().x + this->sizeCell.x * x,
-                                            this->getPosition().y + this->sizeCell.y * y));
+                                                this->getPosition().y + this->sizeCell.y * y));
+
             viewCell->draw(*this->getWindow());
+
         }
     }
+
+    if (this->selected) { this->contextMenuCell->draw(*this->getWindow()); }
 
     this->sliderSpeed->draw(*this->getWindow());
     this->buttonGame->draw(*this->getWindow());
@@ -276,16 +280,19 @@ void GameWidget::checkOnEvent(sf::Event event)
 
     float x, y;
 
-    if (event.mouseButton.button == sf::Mouse::Right)
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right)
     {
-        x = (sf::Mouse::getPosition(*this->getWindow()).x - this->getPosition().x) /
-                this->amountCellOnX;
-        y = (sf::Mouse::getPosition(*this->getWindow()).y - this->getPosition().y * .95f) /
-                this->amountCellOnY;
+        this->selected = false;
 
-        if (x >= 0 && x <= this->amountCellOnX
+        x = (sf::Mouse::getPosition(*this->getWindow()).x - this->getPosition().x) /
+            this->sizeCell.x;
+        y = (sf::Mouse::getPosition(*this->getWindow()).y - this->getPosition().y * .95f) /
+            this->sizeCell.y;
+
+        if (y >= 0 && y <= this->amountCellOnX
             &&
-            y >= 0 && y <= this->amountCellOnY)
+            x >= 0 && x <= this->amountCellOnY
+            )
         {
             this->selected = true;
             this->selectedCellCoord = Coords {(u16) x, (u16) y};
@@ -293,13 +300,24 @@ void GameWidget::checkOnEvent(sf::Event event)
             this->contextMenuCell->setPosition(sf::Vector2f (sf::Mouse::getPosition(*this->getWindow()).x,
                                                              sf::Mouse::getPosition(*this->getWindow()).y));
         }
-        else /*if (x < 0 || x > this->amountCellOnX || y < 0 || y > this->amountCellOnY)*/
-        {
-            this->selected = false;
-        }
+    }
+    else if (event.type == sf::Event::MouseButtonPressed
+             &&
+             event.mouseButton.button == sf::Mouse::Left
+             &&
+            (this->contextMenuCell->getPosition().y > sf::Mouse::getPosition(*this->getWindow()).y
+             ||
+             this->contextMenuCell->getPosition().y + this->contextMenuCell->getSize().y < sf::Mouse::getPosition(*this->getWindow()).y
+             ||
+             this->contextMenuCell->getPosition().x > sf::Mouse::getPosition(*this->getWindow()).x
+             ||
+             this->contextMenuCell->getPosition().x + this->contextMenuCell->getSize().x < sf::Mouse::getPosition(*this->getWindow()).x
+            ))
+    {
+        this->selected = false;
     }
 
-    if (this->selected) { this->contextMenuCell->draw(*this->getWindow()); }
+    if (this->selected) { this->contextMenuCell->checkOnEvent(event); }
 
     this->sliderSpeed->checkOnEvent(event);
     this->buttonGame->checkOnEvent(event);

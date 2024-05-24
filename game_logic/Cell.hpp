@@ -27,6 +27,4 @@ public:
     void checkOnEvent(sf::Event event) override; /* todo! ??*/
 };
 
-
-
 #endif //GAME_LIFE_CELL_HPP

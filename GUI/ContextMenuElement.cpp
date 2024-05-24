@@ -9,7 +9,8 @@ my_gui::ContextMenuElement::ContextMenuElement(sf::RenderWindow &window,
                                                char *pathImage,
                                                char *pathFont,
                                                sf::String text,
-                                               void (*clickEvent)(sf::RenderWindow* window, Widget* widget),
+                                               my_gui::Widget* contextCalled,
+                                               void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisElement),
                                                sf::Color textColor,
                                                sf::Color idleColor,
                                                sf::Color hoverColor,
@@ -28,7 +29,7 @@ my_gui::ContextMenuElement::ContextMenuElement(sf::RenderWindow &window,
     this->backgroundTexture.setSmooth(true);
     this->loadImage(pathImage);
     this->imageTexture.setSmooth(true);
-    this->setClickEvent(clickEvent);
+    this->setClickEvent(clickEvent, contextCalled);
     this->setIdleColor(idleColor);
     this->setHoverColor(hoverColor);
     this->setActiveColor(activeColor);
@@ -67,7 +68,11 @@ void my_gui::ContextMenuElement::setText(sf::String text) { this->text->setText(
 
 sf::String my_gui::ContextMenuElement::getText() {return this->text->getText(); }
 
-void my_gui::ContextMenuElement::setClickEvent(void (*clickEvent)(sf::RenderWindow *, Widget *)) { this->clickEvent = clickEvent; }
+void my_gui::ContextMenuElement::setClickEvent(void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisElement), my_gui::Widget* contextCalled)
+{
+    this->contextCalled = contextCalled;
+    this->clickEvent = clickEvent;
+}
 
 void my_gui::ContextMenuElement::setIdleColor(sf::Color idleColor) { this->idleColor = idleColor; }
 
@@ -94,11 +99,12 @@ void my_gui::ContextMenuElement::setPosition(sf::Vector2f position)
 
     this->background.setPosition(this->position);
 
-    this->image.setPosition(this->position);
-    //todo! поправить scale пропорции для картинок
-    this->text->setPosition(sf::Vector2f (((this->getSize().x / this->backgroundTexture.getSize().x) *
-                                          this->getPosition().x +
-                                          this->getPosition().x),
+    this->image.setPosition(sf::Vector2f (this->getPosition().x +
+                                          this->getSize().x * .02f,
+                                          this->getPosition().y));
+
+    this->text->setPosition(sf::Vector2f (this->getPosition().x +
+                                          this->getSize().x * .3f,
                                           this->getPosition().y));
 }
 
@@ -129,7 +135,8 @@ void my_gui::ContextMenuElement::checkOnEvent(sf::Event event)
                                                     sf::Mouse::getPosition(*this->getWindow()).y))
     {
         this->currentAction = TypeAction::Activated;
-        clickEvent(this->getWindow(), this);
+
+        clickEvent(contextCalled, this);
     }
     else if (this->background.getGlobalBounds().contains(sf::Mouse::getPosition(*this->getWindow()).x,
                                                          sf::Mouse::getPosition(*this->getWindow()).y))

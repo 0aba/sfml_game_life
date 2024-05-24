@@ -23,7 +23,8 @@ namespace my_gui
         sf::Color hoverColor;
         sf::Color activeColor;
 
-        void (*clickEvent)(sf::RenderWindow* window, Widget* widget){};
+        my_gui::Widget* contextCalled;
+        void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisButton);
     public:
         ContextMenuElement(sf::RenderWindow& window,
                            sf::Vector2f size,
@@ -32,7 +33,8 @@ namespace my_gui
                            char* pathImage,
                            char* pathFont,
                            sf::String text,
-                           void (*clickEvent)(sf::RenderWindow* window, Widget* widget),
+                           my_gui::Widget* contextCalled,
+                           void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisElement),
                            sf::Color textColor,
                            sf::Color idleColor,
                            sf::Color hoverColor,
@@ -49,7 +51,7 @@ namespace my_gui
         void setText(sf::String text);
         sf::String getText();
 
-        void setClickEvent(void (*clickEvent)(sf::RenderWindow* window, Widget* widget));
+        void setClickEvent(void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisElement), my_gui::Widget* contextCalled);
 
         void setIdleColor(sf::Color idleColor);
         void setHoverColor(sf::Color hoverColor);

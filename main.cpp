@@ -21,8 +21,6 @@ int main()
     //bg.setSize(s);
    // bg.setPosition(p);
 
-
-
     GameWidget g = GameWidget(&window,
              s,
              p,
@@ -67,6 +65,7 @@ int main()
         }
 
         viewPage->drawOnWindow(window);
+        //g.draw(window);
         g.draw(window);
 
         window.display();

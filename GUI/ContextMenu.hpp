@@ -30,11 +30,14 @@ namespace my_gui
                                      char *pathImage,
                                      char *pathFont,
                                      sf::String text,
-                                     void (*clickEvent)(sf::RenderWindow* window, Widget* widget),
+                                     my_gui::Widget* contextCalled,
+                                     void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisElement),
                                      sf::Color textColor,
                                      sf::Color idleColor,
                                      sf::Color hoverColor,
-                                     sf::Color activeColor);
+                                     sf::Color activeColor
+                                     );
+
         ContextMenuElement* getElementAt(unsigned short index);
         void delElementAt(unsigned short index);
         unsigned short getIndexLastElement() const;

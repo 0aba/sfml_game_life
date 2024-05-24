@@ -33,7 +33,7 @@ private:
     sf::Vector2f coordViewContextMenu;
 
     Coords selectedCellCoord;
-    void changeCell(TypeCell type);
+    static void changeCell(GameWidget* gameWidget, TypeCell type);
 
     Cell* livingCell;
     Cell* deadCell;
@@ -42,8 +42,8 @@ private:
     Cell* lifeSupportCell;
 
 public:
-    static const short MIN_SLIDER_VALUE = 1;
-    static const short MAX_SLIDER_VALUE = 100;
+    static const short MIN_SLIDER_VALUE = 500; // .5 секунд
+    static const short MAX_SLIDER_VALUE = 3000; // 3 секунды
 
     GameWidget(sf::RenderWindow* window,
                sf::Vector2f size,

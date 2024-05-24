@@ -6,7 +6,8 @@ my_gui::Slider::Slider(char *pathFont,
                        char *pathTexturePointer,
                        char *pathTexturePopupPointer,
                        float hOffsetPercentageViewPopup,
-                       void (*changeEvent)(sf::RenderWindow *, Widget *),
+                       my_gui::Widget* contextCalled,
+                       void (*changeEvent)(Widget* contextCalled, Slider* thisSlider),
                        sf::Color textColor,
                        sf::Color idleColor,
                        sf::Color hoverColor,
@@ -21,7 +22,7 @@ my_gui::Slider::Slider(char *pathFont,
     this->loadTexturePopupPointer(pathTexturePopupPointer);
 
     this->setHOffsetViewPopup(hOffsetPercentageViewPopup);
-    this->setChangeEvent(changeEvent);
+    this->setChangeEvent(changeEvent, contextCalled);
 
     this->setTextColor(textColor);
     this->setIdleColor(idleColor);
@@ -57,7 +58,11 @@ void my_gui::Slider::setHoverColor(sf::Color hoverColor) { this->hoverColor = ho
 
 void my_gui::Slider::setActiveColor(sf::Color activeColor) { this->activeColor = activeColor; }
 
-void my_gui::Slider::setChangeEvent(void (*changeEvent)(sf::RenderWindow* window, Widget* widget))  { this->changeEvent = changeEvent; }
+void my_gui::Slider::setChangeEvent(void (*changeEvent)(Widget* contextCalled, Slider* thisSlider), my_gui::Widget* contextCalled)
+{
+    this->contextCalled = contextCalled;
+    this->changeEvent = changeEvent;
+}
 
 void my_gui::Slider::loadTexturePopupPointer(char* path)
 {

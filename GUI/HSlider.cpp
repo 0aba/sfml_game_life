@@ -10,7 +10,8 @@ my_gui::HSlider::HSlider(sf::RenderWindow &window,
                          char *pathTexturePointer,
                          char *pathTexturePopupPointer,
                          float hOffsetPercentageViewPopup,
-                         void (*changeEvent)(sf::RenderWindow *, Widget *),
+                         my_gui::Widget* contextCalled,
+                         void (*changeEvent)(Widget* contextCalled, Slider* thisSlider),
                          sf::Color textColor,
                          sf::Color idleColor,
                          sf::Color hoverColor,
@@ -21,6 +22,7 @@ my_gui::HSlider::HSlider(sf::RenderWindow &window,
                                                 pathTexturePointer,
                                                 pathTexturePopupPointer,
                                                 hOffsetPercentageViewPopup,
+                                                contextCalled,
                                                 changeEvent,
                                                 textColor,
                                                 idleColor,
@@ -150,7 +152,7 @@ void my_gui::HSlider::checkOnEvent(sf::Event event)
         this->setValuePointer(this->getValuesPointer());
         this->setPosition(this->getPosition());
 
-        changeEvent(this->getWindow(), this);
+        changeEvent(this->contextCalled, this);
     }
     else if (this->pointer.getGlobalBounds().contains(sf::Mouse::getPosition(*this->getWindow()).x,
                                                       sf::Mouse::getPosition(*this->getWindow()).y))
