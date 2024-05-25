@@ -29,7 +29,35 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                           sf::Color(100, 100, 100),
                                           sf::Color(150, 150, 150),
                                           sf::Color(200, 200, 200)
-                                        );
+                                          );
+
+    this->buttonRandom = new my_gui::Button(*this->getWindow(),
+                                          sf::Vector2f (1, 1),
+                                          sf::Vector2f (1, 1),
+                                          nullptr,
+                                          nullptr,
+                                          "random",
+                                          this,
+                                          GameWidget::clickButtonRandom,
+                                          sf::Color(50, 50, 50),
+                                          sf::Color(100, 100, 100),
+                                          sf::Color(150, 150, 150),
+                                          sf::Color(200, 200, 200)
+                                          );
+
+    this->buttonClear = new my_gui::Button(*this->getWindow(),
+                                          sf::Vector2f (1, 1),
+                                          sf::Vector2f (1, 1),
+                                          nullptr,
+                                          nullptr,
+                                          "clear",
+                                          this,
+                                          GameWidget::clickButtonClear,
+                                          sf::Color(50, 50, 50),
+                                          sf::Color(100, 100, 100),
+                                          sf::Color(150, 150, 150),
+                                          sf::Color(200, 200, 200)
+    );
 
 
     this->contextMenuCell = new my_gui::ContextMenu(*this->getWindow(),
@@ -152,20 +180,34 @@ void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Butt
     }
     else /*if (!this->gameRunStatus)*/
     {
+        ///
+        /// info! этот код используется!!! не верить Clion!!!!
+        ///
         ((GameWidget*) contextCalled)->runDeveloperLife = new std::jthread([contextCalled] (const std::stop_token& token) {
-                    while (true)
-                    {
-                        if (token.stop_requested()) { return; }
+            while (true)
+            {
+                if (token.stop_requested()) { return; }
 
-                        std::this_thread::sleep_for(std::chrono::milliseconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
+                std::this_thread::sleep_for(std::chrono::milliseconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
 
-                        ((GameWidget*) contextCalled)->game->developmentOfLife();
-                    }
-                });
+                ((GameWidget*) contextCalled)->game->developmentOfLife();
+            }
+        });
 
         ((my_gui::Button*) thisButton)->setText("stop");
         ((GameWidget*) contextCalled)->gameRunStatus = true;
     }
+}
+
+void GameWidget::clickButtonRandom(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)
+{
+    ((GameWidget*) contextCalled)->game->clearMapGame();
+    ((GameWidget*) contextCalled)->game->setRandomMapGame();
+}
+
+void GameWidget::clickButtonClear(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)
+{
+    ((GameWidget*) contextCalled)->game->clearMapGame();
 }
 
 void GameWidget::changeCell(GameWidget* gameWidget, TypeCell type) { gameWidget->game->setCell(gameWidget->selectedCellCoord, type); }
@@ -191,6 +233,8 @@ u16 GameWidget::getAmountCellOnY() const { return this->amountCellOnY; }
 GameWidget::~GameWidget()
 {
     delete this->buttonGame;
+    delete this->buttonClear;
+    delete this->buttonRandom;
     delete this->sliderSpeed;
     delete this->contextMenuCell;
 
@@ -214,8 +258,13 @@ void GameWidget::setSize(sf::Vector2f size)
     this->killingCell->setSize(this->sizeCell);
     this->lifeSupportCell->setSize(this->sizeCell);
 
-    this->buttonGame->setSize(sf::Vector2f((this->getSize().x * .95f) / 2,
+    this->buttonGame->setSize(sf::Vector2f((this->getSize().x * .95f) / 6,
                                            this->getSize().y * .099f));
+    this->buttonRandom->setSize(sf::Vector2f((this->getSize().x * .95f) / 6,
+                                           this->getSize().y * .099f));
+    this->buttonClear->setSize(sf::Vector2f((this->getSize().x * .95f) / 6,
+                                           this->getSize().y * .099f));
+
     this->sliderSpeed->setSize(sf::Vector2f((this->getSize().x * .95f) / 2,
                                             this->getSize().y * .099f));
     this->contextMenuCell->setSize(sf::Vector2f(this->getSize().x * .33f,
@@ -229,6 +278,18 @@ void GameWidget::setPosition(sf::Vector2f position)
                                                this->getPosition().y +
                                                this->getSize().y -
                                                this->getSize().y * .099f));
+    this->buttonRandom->setPosition(sf::Vector2f(this->getPosition().x +
+                                               (this->getSize().x * .95f) / 6,
+                                               this->getPosition().y +
+                                               this->getSize().y -
+                                               this->getSize().y * .099f));
+    this->buttonClear->setPosition(sf::Vector2f(this->getPosition().x +
+                                                 (this->getSize().x * .95f) / 3,
+                                               this->getPosition().y +
+                                               this->getSize().y -
+                                               this->getSize().y * .099f));
+
+
     this->sliderSpeed->setPosition(sf::Vector2f(this->getPosition().x +
                                                 this->getSize().x -
                                                 (this->getSize().x * .95f) / 2,
@@ -274,6 +335,8 @@ void GameWidget::draw(sf::RenderWindow& window)
 
     this->sliderSpeed->draw(*this->getWindow());
     this->buttonGame->draw(*this->getWindow());
+    this->buttonRandom->draw(*this->getWindow());
+    this->buttonClear->draw(*this->getWindow());
 }
 
 void GameWidget::checkOnEvent(sf::Event event)
@@ -323,7 +386,11 @@ void GameWidget::checkOnEvent(sf::Event event)
 
     this->sliderSpeed->checkOnEvent(event);
     this->buttonGame->checkOnEvent(event);
+    this->buttonRandom->checkOnEvent(event);
+    this->buttonClear->checkOnEvent(event);
 }
 
-
-
+void GameWidget::breakGame()
+{
+    if (this->gameRunStatus) { GameWidget::clickButtonGame(this, this->buttonGame); }
+}

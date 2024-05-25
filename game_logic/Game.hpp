@@ -99,6 +99,8 @@ public:
 
     void setRandomMapGame();
 
+    void clearMapGame();
+
     mapFilledCell getMapGame() const;
 };
 

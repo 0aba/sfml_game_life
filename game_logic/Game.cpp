@@ -183,6 +183,8 @@ void Game::setRandomMapGame()
     }
 }
 
+void Game::clearMapGame() {  this->_mapGame.clear(); }
+
 mapFilledCell Game::getMapGame() const { return this->_mapGame; }
 
 

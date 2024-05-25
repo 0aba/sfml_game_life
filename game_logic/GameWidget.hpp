@@ -24,14 +24,17 @@ private:
 
     bool gameRunStatus = false;
     my_gui::Button* buttonGame;
+    my_gui::Button* buttonRandom;
+    my_gui::Button* buttonClear;
     static void clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton);
+    static void clickButtonRandom(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton);
+    static void clickButtonClear(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton);
     std::jthread* runDeveloperLife;
 
     my_gui::HSlider* sliderSpeed;
 
     bool selected = false;
     my_gui::ContextMenu* contextMenuCell;
-    sf::Vector2f coordViewContextMenu;
 
     Coords selectedCellCoord;
     static void changeCell(GameWidget* gameWidget, TypeCell type);
@@ -60,6 +63,8 @@ public:
 
     void setAmountCellOnY(u16 amount);
     u16 getAmountCellOnY() const;
+
+    void breakGame();
 
     void setSize(sf::Vector2f size) override;
 

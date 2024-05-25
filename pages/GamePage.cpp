@@ -10,7 +10,11 @@ GamePage::GamePage(sf::RenderWindow* window, TypePage* pageView, Game* game) : P
                                           nullptr,
                                           "back to menu",
                                           this,
-                                          [] (my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)  { *((GamePage*) contextCalled)->pageView = TypePage::MenuPageType;  },
+                                          [] (my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)
+                                          {
+                                              ((GamePage*) contextCalled)->gameWidget->breakGame();
+                                              *((GamePage*) contextCalled)->pageView = TypePage::MenuPageType;
+                                          },
                                           sf::Color(150, 150, 150),
                                           sf::Color(10, 25, 75),
                                           sf::Color(15, 50, 150),

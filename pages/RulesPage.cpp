@@ -3,9 +3,9 @@
 
 RulesPage::RulesPage(sf::RenderWindow* window, TypePage* pageView) : Page(window, pageView)
 {
-    if (!font.loadFromFile(".\\resources_GUI\\arial.ttf")) { return; }
+    if (!this->font.loadFromFile(".\\resources_GUI\\arial.ttf")) { return; }
 
-    textRules.setFont(font);
+    textRules.setFont(this->font);
     textRules.setString("Type cell:\n \
                        '#' - living cell.\n\
                        '_' - dead cell.\n\
