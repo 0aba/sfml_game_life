@@ -2,11 +2,11 @@
 #define MY_GUI_WIDGET_HPP
 
 #include <SFML/Graphics.hpp>
-
+#include "./OBJECT_GUI.hpp"
 
 namespace my_gui
 {
-    class Widget
+    class Widget: public OBJECT_GUI
     {
     protected:
         sf::RenderWindow* window = nullptr;

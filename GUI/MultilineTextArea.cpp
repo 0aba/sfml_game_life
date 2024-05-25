@@ -26,7 +26,7 @@ my_gui::MultilineTextArea::MultilineTextArea(sf::RenderWindow& window,
 void my_gui::MultilineTextArea::loadFont(const char *pathFont)
 {
     if(pathFont != nullptr && this->font.loadFromFile(pathFont)) { }
-    else if (!this->font.loadFromFile("resources_GUI\\arial.ttf")) { return; }
+    else if (!this->font.loadFromFile(".\\resources_GUI\\arial.ttf")) { return; }
 
     this->viewMultilineText.setFont(this->font);
 }

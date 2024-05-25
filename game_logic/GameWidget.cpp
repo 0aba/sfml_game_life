@@ -4,15 +4,18 @@
 GameWidget::GameWidget(sf::RenderWindow* window,
                        sf::Vector2f size,
                        sf::Vector2f position,
+                       Game* game,
                        unsigned short amountCellOnX,
                        unsigned short amountCellOnY)
 {
     this->setWindow(*window);
 
-    this->game = new Game();
+    this->game = game;
 
     this->amountCellOnX = amountCellOnX;
+    this->game->setArenaSizeX(amountCellOnX);
     this->amountCellOnY = amountCellOnY;
+    this->game->setArenaSizeY(amountCellOnY);
 
     this->buttonGame = new my_gui::Button(*this->getWindow(),
                                           sf::Vector2f (1, 1),
@@ -44,7 +47,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                             nullptr,
                                             .5f,
                                             this,
-                                            [] (my_gui::Widget* contextCalled, my_gui::Slider* thisSlider) { /*None!!!*/ },
+                                            [] (my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider) { /*None!!!*/ },
                                             sf::Color(50, 50, 50),
                                             sf::Color(100, 100, 100),
                                             sf::Color(150, 150, 150),
@@ -53,22 +56,11 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                             GameWidget::MAX_SLIDER_VALUE
     );
     this->contextMenuCell->createElement(nullptr,
-                                         "./resources_GUI/living_cell.png",
-                                         nullptr,
-                                         "live cell",
-                                         this,
-                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::LivingCell); },
-                                         sf::Color(50, 50, 50),
-                                         sf::Color(100, 100, 100),
-                                         sf::Color(150, 150, 150),
-                                         sf::Color(200, 200, 200)
-                                         );
-    this->contextMenuCell->createElement(nullptr,
                                          "./resources_GUI/dead_cell.png",
                                          nullptr,
                                          "dead cell",
                                          this,
-                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::DeadCell); },
+                                         [] (my_gui::OBJECT_GUI* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::DeadCell); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -79,7 +71,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          nullptr,
                                          "wall cell",
                                          this,
-                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::Wall); },
+                                         [] (my_gui::OBJECT_GUI* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::Wall); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -90,7 +82,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          nullptr,
                                          "killing cell",
                                          this,
-                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::KillingCell); },
+                                         [] (my_gui::OBJECT_GUI* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::KillingCell); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -101,7 +93,18 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          nullptr,
                                          "support cell",
                                          this,
-                                         [] (my_gui::Widget* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::LifeSupportCell); },
+                                         [] (my_gui::OBJECT_GUI* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::LifeSupportCell); },
+                                         sf::Color(50, 50, 50),
+                                         sf::Color(100, 100, 100),
+                                         sf::Color(150, 150, 150),
+                                         sf::Color(200, 200, 200)
+    );
+    this->contextMenuCell->createElement(nullptr,
+                                         "./resources_GUI/living_cell.png",
+                                         nullptr,
+                                         "live cell",
+                                         this,
+                                         [] (my_gui::OBJECT_GUI* contextCalled, my_gui::ContextMenuElement* thisElement) { GameWidget::changeCell(((GameWidget *) contextCalled), TypeCell::LivingCell); },
                                          sf::Color(50, 50, 50),
                                          sf::Color(100, 100, 100),
                                          sf::Color(150, 150, 150),
@@ -138,7 +141,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
     ((GameWidget*) this)->setPosition(position);
 }
 
-void GameWidget::clickButtonGame(Widget* contextCalled, my_gui::Button* thisButton)
+void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)
 {
     if (((GameWidget*) contextCalled)->gameRunStatus)
     {
@@ -170,7 +173,7 @@ void GameWidget::changeCell(GameWidget* gameWidget, TypeCell type) { gameWidget-
 void GameWidget::setAmountCellOnX(unsigned short amount)
 {
     this->amountCellOnX = amount;
-
+    this->game->setArenaSizeX(amountCellOnX);
     this->setSize(this->getSize());
 }
 
@@ -179,7 +182,7 @@ u16 GameWidget::getAmountCellOnX() const { return this->amountCellOnX; }
 void GameWidget::setAmountCellOnY(unsigned short amount)
 {
     this->amountCellOnY = amount;
-
+    this->game->setArenaSizeY(amountCellOnY);
     this->setSize(this->getSize());
 }
 
@@ -190,7 +193,6 @@ GameWidget::~GameWidget()
     delete this->buttonGame;
     delete this->sliderSpeed;
     delete this->contextMenuCell;
-    delete this->game;
 
     delete this->livingCell;
     delete this->deadCell;

@@ -9,8 +9,8 @@ my_gui::ContextMenuElement::ContextMenuElement(sf::RenderWindow &window,
                                                char *pathImage,
                                                char *pathFont,
                                                sf::String text,
-                                               my_gui::Widget* contextCalled,
-                                               void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisElement),
+                                               OBJECT_GUI* contextCalled,
+                                               void (*clickEvent)(OBJECT_GUI* contextCalled, ContextMenuElement* thisElement),
                                                sf::Color textColor,
                                                sf::Color idleColor,
                                                sf::Color hoverColor,
@@ -68,7 +68,7 @@ void my_gui::ContextMenuElement::setText(sf::String text) { this->text->setText(
 
 sf::String my_gui::ContextMenuElement::getText() {return this->text->getText(); }
 
-void my_gui::ContextMenuElement::setClickEvent(void (*clickEvent)(my_gui::Widget* contextCalled, ContextMenuElement* thisElement), my_gui::Widget* contextCalled)
+void my_gui::ContextMenuElement::setClickEvent(void (*clickEvent)(OBJECT_GUI* contextCalled, ContextMenuElement* thisElement), OBJECT_GUI* contextCalled)
 {
     this->contextCalled = contextCalled;
     this->clickEvent = clickEvent;

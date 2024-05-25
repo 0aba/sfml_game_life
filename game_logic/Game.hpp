@@ -68,7 +68,7 @@ private:
 
     TypeCell getRandomCell();
 public:
-    static const short DEFAULT_SIDE_SIZE      = 32;
+    static const short DEFAULT_SIDE_SIZE      = 16;
     static const short DEFAULT_LIVING         = 35;
     static const short DEFAULT_SPECIAL_CELL   = 5;
 

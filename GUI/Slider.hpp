@@ -29,8 +29,8 @@ namespace my_gui
         int maxValue = 100;
         int value = minValue;
 
-        my_gui::Widget* contextCalled;
-        void (*changeEvent)(Widget* contextCalled, Slider* thisSlider);
+        OBJECT_GUI* contextCalled;
+        void (*changeEvent)(OBJECT_GUI* contextCalled, Slider* thisSlider);
 
         TypeAction currentAction = TypeAction::Idle;
 
@@ -43,8 +43,8 @@ namespace my_gui
                char* pathTexturePointer,
                char* pathTexturePopupPointer,
                float hOffsetPercentageViewPopup,
-               my_gui::Widget* contextCalled,
-               void (*changeEvent)(Widget* contextCalled, Slider* thisSlider),
+               OBJECT_GUI* contextCalled,
+               void (*changeEvent)(OBJECT_GUI* contextCalled, Slider* thisSlider),
                sf::Color textColor,
                sf::Color idleColor,
                sf::Color hoverColor,
@@ -60,7 +60,7 @@ namespace my_gui
         void setHoverColor(sf::Color hoverColor);
         void setActiveColor(sf::Color activeColor);
 
-        void setChangeEvent(void (*changeEvent)(Widget* contextCalled, Slider* thisSlider), my_gui::Widget* contextCalled);
+        void setChangeEvent(void (*changeEvent)(OBJECT_GUI* contextCalled, Slider* thisSlider), OBJECT_GUI* contextCalled);
 
         void loadTexturePopupPointer(char* path);
         void loadTexturePointer(char* path);

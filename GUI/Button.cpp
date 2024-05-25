@@ -8,8 +8,8 @@ my_gui::Button::Button(sf::RenderWindow& window,
                        char* pathBackgroundTexture,
                        char* pathFont,
                        sf::String text,
-                       my_gui::Widget* contextCalled,
-                       void (*clickEvent)(Widget* contextCalled, Button* thisButton),
+                       OBJECT_GUI* contextCalled,
+                       void (*clickEvent)(OBJECT_GUI* contextCalled, Button* thisButton),
                        sf::Color textColor,
                        sf::Color idleColor,
                        sf::Color hoverColor,
@@ -55,7 +55,7 @@ void my_gui::Button::setHoverColor(sf::Color hoverColor) { this->hoverColor = ho
 
 void my_gui::Button::setActiveColor(sf::Color activeColor) { this->activeColor = activeColor; }
 
-void my_gui::Button::setClickEvent(void (*clickEvent)(Widget* contextCalled, Button* thisButton), my_gui::Widget* contextCalled)
+void my_gui::Button::setClickEvent(void (*clickEvent)(OBJECT_GUI* contextCalled, Button* thisButton), OBJECT_GUI* contextCalled)
 {
     this->contextCalled = contextCalled;
     this->clickEvent = clickEvent;

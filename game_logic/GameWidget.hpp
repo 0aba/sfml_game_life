@@ -6,6 +6,7 @@
 #include "../GUI/HSlider.hpp"
 #include "../GUI/ContextMenuElement.hpp"
 #include "../GUI/ContextMenu.hpp"
+#include "./GameWidget.hpp"
 #include "./Cell.hpp"
 #include "./Game.hpp"
 #include <thread>
@@ -23,7 +24,7 @@ private:
 
     bool gameRunStatus = false;
     my_gui::Button* buttonGame;
-    static void clickButtonGame(Widget* contextCalled, my_gui::Button* thisButton);
+    static void clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton);
     std::jthread* runDeveloperLife;
 
     my_gui::HSlider* sliderSpeed;
@@ -48,6 +49,7 @@ public:
     GameWidget(sf::RenderWindow* window,
                sf::Vector2f size,
                sf::Vector2f position,
+               Game* game,
                u16 amountCellOnX,
                u16 amountCellOnY);
 

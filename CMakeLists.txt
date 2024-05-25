@@ -11,15 +11,18 @@ add_executable(game_life main.cpp
         game_logic/Cell.cpp
         game_logic/Cell.hpp
         game_logic/my_types.hpp
-        pages/menu_page.cpp
-        pages/menu_page.hpp
+        pages/MenuPage.cpp
+        pages/MenuPage.hpp
         pages/Utils.hpp
-        pages/rules_page.cpp
-        pages/rules_page.hpp
-        pages/settings_page.cpp
-        pages/settings_page.hpp
-        pages/game_page.cpp
-        pages/game_page.hpp
+        pages/Page.cpp
+        pages/Page.hpp
+        pages/RulesPage.cpp
+        pages/RulesPage.hpp
+        pages/SettingsPage.cpp
+        pages/SettingsPage.hpp
+        pages/GamePage.cpp
+        pages/GamePage.hpp
+        GUI/OBJECT_GUI.hpp
         GUI/Widget.hpp
         GUI/Widget.cpp
         GUI/Utils.hpp
