@@ -1,15 +1,15 @@
 #include <SFML/Graphics.hpp>
-#include "./pages/MenuPage.hpp" // todo! change
-#include "./pages/RulesPage.hpp" // todo! change
-#include "./pages/SettingsPage.hpp" // todo! change
-#include "./pages/GamePage.hpp" // todo! change
+#include "./pages/MenuPage.hpp"
+#include "./pages/RulesPage.hpp"
+#include "./pages/SettingsPage.hpp"
+#include "./pages/GamePage.hpp"
 
 #include "game_logic/Game.hpp"
 
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "game life");
+    sf::RenderWindow window(sf::VideoMode(800, 700), "game life");
 
     Game* game = new Game();
 
@@ -18,7 +18,7 @@ int main()
 
     MenuPage menuPage(&window, &pageViewChange);
     GamePage gamePage(&window, &pageViewChange, game);
-    SettingsPage settingsPage(&window, &pageViewChange, game);
+    SettingsPage settingsPage(&window, &pageViewChange, gamePage.getPtrOnGameWidget());
     RulesPage rulesPage(&window, &pageViewChange);
 
     while (window.isOpen())

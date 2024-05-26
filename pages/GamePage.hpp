@@ -16,6 +16,8 @@ public:
 
     ~GamePage();
 
+    GameWidget* getPtrOnGameWidget();
+
     void drawOnWindow(sf::RenderWindow& window) override;
     void checkOnEvent(sf::Event& event) override;
 };

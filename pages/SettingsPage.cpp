@@ -1,9 +1,9 @@
 #include "SettingsPage.hpp"
 
 
-SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, Game* game) : Page(window, pageView)
+SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWidget* gameWidget) : Page(window, pageView)
 {
-    this->game = game;
+    this->gameWidget = gameWidget;
 
     if (!this->font.loadFromFile(".\\resources_GUI\\arial.ttf")) { return; }
 
@@ -92,9 +92,53 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, Game* g
                                                      Game::MAX_VALUE_SPECIAL_CELL
     );
 
+    this->titleAmountX.setFont(this->font);
+    this->titleAmountX.setCharacterSize(15);
+    this->titleAmountX.setString("Amount x");
+    this->titleAmountX.setPosition(sf::Vector2f (20, 380));
+    this->sliderAmountX = new my_gui::HSlider(*this->getWindow(),
+                                                     sf::Vector2f (400, 25),
+                                                     sf::Vector2f (20, 430),
+                                                     nullptr,
+                                                     nullptr,
+                                                     nullptr,
+                                                     nullptr,
+                                                     .5f,
+                                                     this,
+                                                     SettingsPage::changeAmountX,
+                                                     sf::Color(50, 50, 50),
+                                                     sf::Color(100, 100, 100),
+                                                     sf::Color(150, 150, 150),
+                                                     sf::Color(200, 200, 200),
+                                                     GameWidget::MIN_SIZE_SIDE,
+                                                     GameWidget::MAX_SIZE_SIDE
+    );
+
+    this->titleAmountY.setFont(this->font);
+    this->titleAmountY.setCharacterSize(15);
+    this->titleAmountY.setString("Amount y");
+    this->titleAmountY.setPosition(sf::Vector2f (20, 470));
+    this->sliderAmountY = new my_gui::HSlider(*this->getWindow(),
+                                                     sf::Vector2f (400, 25),
+                                                     sf::Vector2f (20, 520),
+                                                     nullptr,
+                                                     nullptr,
+                                                     nullptr,
+                                                     nullptr,
+                                                     .5f,
+                                                     this,
+                                                     SettingsPage::changeAmountY,
+                                                     sf::Color(50, 50, 50),
+                                                     sf::Color(100, 100, 100),
+                                                     sf::Color(150, 150, 150),
+                                                     sf::Color(200, 200, 200),
+                                                     GameWidget::MIN_SIZE_SIDE,
+                                                     GameWidget::MAX_SIZE_SIDE
+    );
+
     this->backButton = new my_gui::Button(*this->getWindow(),
                                           sf::Vector2f (200, 50),
-                                          sf::Vector2f (20, 525),
+                                          sf::Vector2f (20, 600),
                                           nullptr,
                                           nullptr,
                                           "back to menu",
@@ -118,6 +162,10 @@ void SettingsPage::drawOnWindow(sf::RenderWindow& window)
     this->sliderSupportPercent->draw(*this->getWindow());
     this->getWindow()->draw(this->titleKilling);
     this->sliderKillingPercent->draw(*this->getWindow());
+    this->getWindow()->draw(this->titleAmountX);
+    this->sliderAmountX->draw(*this->getWindow());
+    this->getWindow()->draw(this->titleAmountY);
+    this->sliderAmountY->draw(*this->getWindow());
 
     this->backButton->draw(window);
 }
@@ -128,35 +176,49 @@ void SettingsPage::checkOnEvent(sf::Event& event)
     this->sliderWallPercent->checkOnEvent(event);
     this->sliderSupportPercent->checkOnEvent(event);
     this->sliderKillingPercent->checkOnEvent(event);
+    this->sliderAmountX->checkOnEvent(event);
+    this->sliderAmountY->checkOnEvent(event);
 
     this->backButton->checkOnEvent(event);
 }
 
 SettingsPage::~SettingsPage()
 {
-    this->sliderAlivePercent;
-    this->sliderWallPercent;
-    this->sliderSupportPercent;
-    this->sliderKillingPercent;
+    delete this->sliderAlivePercent;
+    delete this->sliderWallPercent;
+    delete this->sliderSupportPercent;
+    delete this->sliderKillingPercent;
+    delete this->sliderAmountX;
+    delete this->sliderAmountY;
 }
 
 void SettingsPage::changeAlivePercent(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider)
 {
-    ((SettingsPage*) contextCalled)->game->setLivingPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
+    ((SettingsPage*) contextCalled)->gameWidget->setLivingPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
 }
 
 void SettingsPage::changeWallPercent(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider)
 {
-    ((SettingsPage*) contextCalled)->game->setWallPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
+    ((SettingsPage*) contextCalled)->gameWidget->setWallPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
 }
 
 void SettingsPage::changeSupportPercent(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider)
 {
-    ((SettingsPage*) contextCalled)->game->setSupportPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
+    ((SettingsPage*) contextCalled)->gameWidget->setSupportPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
 }
 
 void SettingsPage::changeKillingPercent(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider)
 {
-    ((SettingsPage*) contextCalled)->game->setKillingPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
+    ((SettingsPage*) contextCalled)->gameWidget->setKillingPercent(((my_gui::HSlider*) thisSlider)->getValuesPointer());
+}
+
+void SettingsPage::changeAmountX(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider)
+{
+    ((SettingsPage*) contextCalled)->gameWidget->setAmountCellOnX(((my_gui::HSlider*) thisSlider)->getValuesPointer());
+}
+
+void SettingsPage::changeAmountY(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider)
+{
+    ((SettingsPage*) contextCalled)->gameWidget->setAmountCellOnY(((my_gui::HSlider*) thisSlider)->getValuesPointer());
 }
 

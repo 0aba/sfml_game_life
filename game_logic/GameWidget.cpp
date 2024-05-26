@@ -215,7 +215,7 @@ void GameWidget::changeCell(GameWidget* gameWidget, TypeCell type) { gameWidget-
 void GameWidget::setAmountCellOnX(unsigned short amount)
 {
     this->amountCellOnX = amount;
-    this->game->setArenaSizeX(amountCellOnX);
+    this->game->setArenaSizeX(amount);
     this->setSize(this->getSize());
 }
 
@@ -224,11 +224,27 @@ u16 GameWidget::getAmountCellOnX() const { return this->amountCellOnX; }
 void GameWidget::setAmountCellOnY(unsigned short amount)
 {
     this->amountCellOnY = amount;
-    this->game->setArenaSizeY(amountCellOnY);
+    this->game->setArenaSizeY(amount);
     this->setSize(this->getSize());
 }
 
 u16 GameWidget::getAmountCellOnY() const { return this->amountCellOnY; }
+
+void GameWidget::setLivingPercent(unsigned short percent) { this->game->setLivingPercent(percent); }
+
+u16 GameWidget::getLivingPercent() const { return this->game->getLivingPercent(); }
+
+void GameWidget::setWallPercent(unsigned short percent) { this->game->setWallPercent(percent); }
+
+u16 GameWidget::getWallPercent() const { return this->game->getWallPercent(); }
+
+void GameWidget::setKillingPercent(unsigned short percent) { this->game->setKillingPercent(percent); }
+
+u16 GameWidget::getKillingPercent() const { return this->game->getKillingPercent(); }
+
+void GameWidget::setSupportPercent(unsigned short percent) { this->game->setSupportPercent(percent); }
+
+u16 GameWidget::getSupportPercent() const { return this->game->getSupportPercent(); }
 
 GameWidget::~GameWidget()
 {

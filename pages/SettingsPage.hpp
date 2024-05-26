@@ -11,7 +11,7 @@
 class SettingsPage : public Page
 {
 private:
-    Game* game;
+    GameWidget* gameWidget;
 
     sf::Font font;
 
@@ -28,9 +28,16 @@ private:
     static void changeKillingPercent(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider);
     my_gui::HSlider* sliderKillingPercent;
 
+    sf::Text titleAmountX;
+    static void changeAmountX(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider);
+    my_gui::HSlider* sliderAmountX;
+    sf::Text titleAmountY;
+    static void changeAmountY(my_gui::OBJECT_GUI* contextCalled, my_gui::Slider* thisSlider);
+    my_gui::HSlider* sliderAmountY;
+
     my_gui::Button* backButton;
 public:
-    explicit SettingsPage(sf::RenderWindow* window, TypePage* pageView, Game* game);
+    explicit SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWidget* gameWidget);
 
     ~SettingsPage();
 

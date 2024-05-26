@@ -48,3 +48,5 @@ GamePage::~GamePage()
     delete this->gameWidget;
     delete this->backButton;
 }
+
+GameWidget *GamePage::getPtrOnGameWidget() { return this->gameWidget; }

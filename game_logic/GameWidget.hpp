@@ -49,6 +49,9 @@ public:
     static const short MIN_SLIDER_VALUE = 500; // .5 секунд
     static const short MAX_SLIDER_VALUE = 3000; // 3 секунды
 
+    static const short MIN_SIZE_SIDE = 8; // .5 секунд
+    static const short MAX_SIZE_SIDE = 32; // 3 секунды
+
     GameWidget(sf::RenderWindow* window,
                sf::Vector2f size,
                sf::Vector2f position,
@@ -63,6 +66,16 @@ public:
 
     void setAmountCellOnY(u16 amount);
     u16 getAmountCellOnY() const;
+
+    void setLivingPercent(u16 percent);
+    u16 getLivingPercent() const;
+
+    void setWallPercent(u16 percent);
+    u16 getWallPercent() const;
+    void setKillingPercent(u16 percent);
+    u16 getKillingPercent() const;
+    void setSupportPercent(u16 percent);
+    u16 getSupportPercent() const;
 
     void breakGame();
 
