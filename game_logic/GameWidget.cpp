@@ -9,7 +9,6 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                        unsigned short amountCellOnY)
 {
     this->setWindow(*window);
-
     this->game = game;
 
     this->amountCellOnX = amountCellOnX;
@@ -167,6 +166,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
 
     ((GameWidget*) this)->setSize(size);
     ((GameWidget*) this)->setPosition(position);
+
 }
 
 void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)
@@ -180,19 +180,17 @@ void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Butt
     }
     else /*if (!this->gameRunStatus)*/
     {
-        ///
-        /// info! этот код используется!!! не верить Clion!!!!
-        ///
-        ((GameWidget*) contextCalled)->runDeveloperLife = new std::jthread([contextCalled] (const std::stop_token& token) {
+        ((GameWidget*) contextCalled)->runDeveloperLife = new std::jthread([] (const std::stop_token& token, my_gui::OBJECT_GUI* contextCalled) {
             while (true)
             {
                 if (token.stop_requested()) { return; }
 
                 std::this_thread::sleep_for(std::chrono::milliseconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
 
+                // todo! error: std::out_of_range !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ((GameWidget*) contextCalled)->game->developmentOfLife();
             }
-        });
+        }, std::ref(contextCalled));
 
         ((my_gui::Button*) thisButton)->setText("stop");
         ((GameWidget*) contextCalled)->gameRunStatus = true;

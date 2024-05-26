@@ -6,16 +6,16 @@
 
 #include "game_logic/Game.hpp"
 
-
+//////
+#include <iostream>
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 700), "game life");
+     sf::RenderWindow window(sf::VideoMode(800, 700), "game life");
 
     Game* game = new Game();
 
     TypePage pageViewChange = TypePage::MenuPageType;
     Page* viewPage;
-
     MenuPage menuPage(&window, &pageViewChange);
     GamePage gamePage(&window, &pageViewChange, game);
     SettingsPage settingsPage(&window, &pageViewChange, gamePage.getPtrOnGameWidget());

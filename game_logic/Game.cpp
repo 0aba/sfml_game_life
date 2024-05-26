@@ -165,7 +165,7 @@ void Game::setCell(Coords coord, TypeCell type) { this->_mapGame[coord] = type; 
 
 TypeCell Game::getCell(Coords coord) { return this->_mapGame.find(coord) != this->_mapGame.end()
                                               ?
-                                              this->_mapGame.at(coord) : TypeCell::DeadCell;}
+                                              this->_mapGame.at(coord) : TypeCell::DeadCell; }
 
 void Game::setRandomMapGame()
 {
@@ -174,7 +174,7 @@ void Game::setRandomMapGame()
     {
         for (u16 y = 0; y < _arenaSizeY; ++y)
         {
-            typeCurrentCell = getRandomCell();
+            typeCurrentCell = this->getRandomCell();
 
             if (typeCurrentCell == TypeCell::DeadCell) { continue; }
 

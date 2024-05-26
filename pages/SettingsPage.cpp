@@ -72,7 +72,7 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWid
     );
     this->titleKilling.setFont(this->font);
     this->titleKilling.setCharacterSize(15);
-    this->titleKilling.setString("Support Killing");
+    this->titleKilling.setString("Killing Percent");
     this->titleKilling.setPosition(sf::Vector2f (20, 290));
     this->sliderKillingPercent = new my_gui::HSlider(*this->getWindow(),
                                                      sf::Vector2f (400, 25),
