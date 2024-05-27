@@ -215,7 +215,12 @@ void GameWidget::clickButtonClear(my_gui::OBJECT_GUI* contextCalled, my_gui::But
     ((GameWidget*) contextCalled)->gameMutex.unlock();
 }
 
-void GameWidget::changeCell(GameWidget* gameWidget, TypeCell type) { gameWidget->game->setCell(gameWidget->selectedCellCoord, type); }
+void GameWidget::changeCell(GameWidget* gameWidget, TypeCell type)
+{
+    gameWidget->gameMutex.lock();
+    gameWidget->game->setCell(gameWidget->selectedCellCoord, type);
+    gameWidget->gameMutex.unlock();
+}
 
 void GameWidget::setAmountCellOnX(unsigned short amount)
 {
@@ -366,16 +371,16 @@ void GameWidget::checkOnEvent(sf::Event event)
 {
     if(!this->getViewState()) { return; }
 
-    float x, y;
+    float x = (sf::Mouse::getPosition(*this->getWindow()).x - this->getPosition().x) /
+        this->sizeCell.x;
+    float y = (sf::Mouse::getPosition(*this->getWindow()).y - this->getPosition().y * .95f) /
+        this->sizeCell.y;
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right)
     {
         this->selected = false;
 
-        x = (sf::Mouse::getPosition(*this->getWindow()).x - this->getPosition().x) /
-            this->sizeCell.x;
-        y = (sf::Mouse::getPosition(*this->getWindow()).y - this->getPosition().y * .95f) /
-            this->sizeCell.y;
+        this->selectedCellCoord = Coords {(u16) x, (u16) y};
 
         if (y >= 0 && y <= this->amountCellOnX
             &&
@@ -383,7 +388,6 @@ void GameWidget::checkOnEvent(sf::Event event)
             )
         {
             this->selected = true;
-            this->selectedCellCoord = Coords {(u16) x, (u16) y};
 
             this->contextMenuCell->setPosition(sf::Vector2f (sf::Mouse::getPosition(*this->getWindow()).x,
                                                              sf::Mouse::getPosition(*this->getWindow()).y));
@@ -392,7 +396,12 @@ void GameWidget::checkOnEvent(sf::Event event)
     else if (event.type == sf::Event::MouseButtonPressed
              &&
              event.mouseButton.button == sf::Mouse::Left
-             &&
+            )
+    {
+        if (y >= 0 && y <= this->amountCellOnX
+            &&
+            x >= 0 && x <= this->amountCellOnY
+            &&
             (this->contextMenuCell->getPosition().y > sf::Mouse::getPosition(*this->getWindow()).y
              ||
              this->contextMenuCell->getPosition().y + this->contextMenuCell->getSize().y < sf::Mouse::getPosition(*this->getWindow()).y
@@ -400,9 +409,20 @@ void GameWidget::checkOnEvent(sf::Event event)
              this->contextMenuCell->getPosition().x > sf::Mouse::getPosition(*this->getWindow()).x
              ||
              this->contextMenuCell->getPosition().x + this->contextMenuCell->getSize().x < sf::Mouse::getPosition(*this->getWindow()).x
+             ||
+             !this->selected
             ))
-    {
-        this->selected = false;
+        {
+            this->selected = false;
+
+            this->selectedCellCoord = Coords {(u16) x, (u16) y};
+
+            TypeCell currentType = this->game->getCell(selectedCellCoord);
+
+            if (currentType == TypeCell::LivingCell) { this->game->setCell(selectedCellCoord, TypeCell::DeadCell); }
+            else if (currentType == TypeCell::DeadCell) { this->game->setCell(selectedCellCoord, TypeCell::LivingCell); }
+
+        }
     }
 
     if (this->selected) { this->contextMenuCell->checkOnEvent(event); }

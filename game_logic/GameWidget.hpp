@@ -48,11 +48,11 @@ private:
     Cell* lifeSupportCell;
 
 public:
-    static const short MIN_SLIDER_VALUE = 500; // .5 секунд
+    static const short MIN_SLIDER_VALUE = 100; // .1 секунд
     static const short MAX_SLIDER_VALUE = 3000; // 3 секунды
 
-    static const short MIN_SIZE_SIDE = 8; // .5 секунд
-    static const short MAX_SIZE_SIDE = 32; // 3 секунды
+    static const short MIN_SIZE_SIDE = 8;
+    static const short MAX_SIZE_SIDE = 32;
 
     GameWidget(sf::RenderWindow* window,
                sf::Vector2f size,
