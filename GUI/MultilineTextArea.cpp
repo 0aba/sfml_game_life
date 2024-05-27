@@ -69,7 +69,7 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
         if (amountLines == 0) { amountLines = 1; }
 
         // todo! доработать
-        if ((this->viewMultilineText.getGlobalBounds().height * this->amountLines * 1.25f) > this->getSize().y)
+        if ((this->viewMultilineText.getGlobalBounds().height * this->amountLines * 1.45f) >= this->getSize().y)
         {
             --newSize;
             this->viewMultilineText.setCharacterSize(newSize);

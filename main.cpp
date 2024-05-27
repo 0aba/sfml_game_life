@@ -8,6 +8,7 @@
 
 //////
 #include <iostream>
+#include "./GUI/MultilineTextArea.hpp"
 int main()
 {
      sf::RenderWindow window(sf::VideoMode(800, 700), "game life");
@@ -29,7 +30,7 @@ int main()
             case GamePageType: viewPage = &gamePage; break;
             case SettingsPageType: viewPage = &settingsPage; break;
             case RulesPageType: viewPage = &rulesPage; break;
-            case ExitPageType: return EXIT_SUCCESS;
+            case ExitPageType: window.close();
         }
 
         sf::Event event;
