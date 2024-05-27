@@ -10,6 +10,7 @@
 #include "./Cell.hpp"
 #include "./Game.hpp"
 #include <thread>
+#include <mutex>
 #include <chrono>
 
 
@@ -22,6 +23,7 @@ private:
     u16 amountCellOnX;
     u16 amountCellOnY;
 
+    std::mutex gameMutex;
     bool gameRunStatus = false;
     my_gui::Button* buttonGame;
     my_gui::Button* buttonRandom;

@@ -174,6 +174,8 @@ void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Butt
     if (((GameWidget*) contextCalled)->gameRunStatus)
     {
         ((GameWidget*) contextCalled)->runDeveloperLife->request_stop();
+        ((GameWidget*) contextCalled)->runDeveloperLife->join();
+
         ((my_gui::Button*) thisButton)->setText("run");
 
         ((GameWidget*) contextCalled)->gameRunStatus = false;
@@ -187,8 +189,9 @@ void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Butt
 
                 std::this_thread::sleep_for(std::chrono::milliseconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
 
-                // todo! error: std::out_of_range !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                ((GameWidget*) contextCalled)->gameMutex.lock();
                 ((GameWidget*) contextCalled)->game->developmentOfLife();
+                ((GameWidget*) contextCalled)->gameMutex.unlock();
             }
         }, std::ref(contextCalled));
 
@@ -199,13 +202,17 @@ void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Butt
 
 void GameWidget::clickButtonRandom(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)
 {
+    ((GameWidget*) contextCalled)->gameMutex.lock();
     ((GameWidget*) contextCalled)->game->clearMapGame();
     ((GameWidget*) contextCalled)->game->setRandomMapGame();
+    ((GameWidget*) contextCalled)->gameMutex.unlock();
 }
 
 void GameWidget::clickButtonClear(my_gui::OBJECT_GUI* contextCalled, my_gui::Button* thisButton)
 {
+    ((GameWidget*) contextCalled)->gameMutex.lock();
     ((GameWidget*) contextCalled)->game->clearMapGame();
+    ((GameWidget*) contextCalled)->gameMutex.unlock();
 }
 
 void GameWidget::changeCell(GameWidget* gameWidget, TypeCell type) { gameWidget->game->setCell(gameWidget->selectedCellCoord, type); }
@@ -320,6 +327,7 @@ void GameWidget::draw(sf::RenderWindow& window)
 
     this->setWindow(window);
 
+    this->gameMutex.lock();
     for (int y = 0; y < this->amountCellOnY; ++y)
     {
         for (int x = 0; x < this->amountCellOnX; ++x)
@@ -344,6 +352,7 @@ void GameWidget::draw(sf::RenderWindow& window)
 
         }
     }
+    this->gameMutex.unlock();
 
     if (this->selected) { this->contextMenuCell->draw(*this->getWindow()); }
 

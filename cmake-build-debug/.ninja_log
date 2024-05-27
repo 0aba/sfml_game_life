@@ -89,3 +89,8 @@
 8748	10153	7384530375391045	game_life.exe	5c4bcb79816ceb68
 15	5439	7384532997948072	CMakeFiles/game_life.dir/game_logic/GameWidget.cpp.obj	709fd0bad6621b5e
 5450	6800	7384533011385036	game_life.exe	5c4bcb79816ceb68
+56	8169	7384987373877789	CMakeFiles/game_life.dir/pages/GamePage.cpp.obj	f3e791f1bf1d7fab
+67	8227	7384987374755029	CMakeFiles/game_life.dir/pages/SettingsPage.cpp.obj	97a466260d72ebd1
+45	8501	7384987377481382	CMakeFiles/game_life.dir/game_logic/GameWidget.cpp.obj	709fd0bad6621b5e
+24	8884	7384987381321033	CMakeFiles/game_life.dir/main.cpp.obj	6acaf5545b2a91f4
+8885	11064	7384987402970843	game_life.exe	5c4bcb79816ceb68
