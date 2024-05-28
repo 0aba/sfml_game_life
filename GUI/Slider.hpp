@@ -37,6 +37,8 @@ namespace my_gui
         sf::Color idleColor;
         sf::Color hoverColor;
         sf::Color activeColor;
+
+        void setOnlyValuePointer(int value);
     public:
         Slider(char* pathFont,
                char* pathTextureSliderLine,
@@ -74,7 +76,7 @@ namespace my_gui
         void setValueMin(int value);
         int getValueMin() const;
 
-        void setValuePointer(int value);
+        virtual void setValuePointer(int value) = 0;
         int getValuesPointer() const;
 
         void setViewState(bool state) override;

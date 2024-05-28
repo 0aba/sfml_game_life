@@ -34,6 +34,8 @@ my_gui::HSlider::HSlider(sf::RenderWindow &window,
     this->setWindow(window);
 
     // просто this тоже работает, но так нет уведомлений от ide
+    ((HSlider*) this)->setValuePointer(this->minValue);
+
     ((HSlider*) this)->setSize(size);
     ((HSlider*) this)->setPosition(position);
 }
@@ -160,4 +162,10 @@ void my_gui::HSlider::checkOnEvent(sf::Event event)
         this->currentAction = TypeAction::Hover;
     }
     else  { this->currentAction = TypeAction::Idle; }
+}
+
+void my_gui::HSlider::setValuePointer(int value)
+{
+    this->setOnlyValuePointer(value);
+    this->setPosition(this->getPosition());
 }

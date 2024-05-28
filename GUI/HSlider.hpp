@@ -27,6 +27,8 @@ namespace my_gui
                 int maxValue
         );
 
+        void setValuePointer(int value) override;
+
         void setSize(sf::Vector2f size) override;
         void setPosition(sf::Vector2f position) override;
         void draw(sf::RenderWindow& window) override;

@@ -68,7 +68,6 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
         this->amountLines = (this->viewMultilineText.getString().getSize() / this->amountCharOnLine) + 1;
         if (amountLines == 0) { amountLines = 1; }
 
-        // todo! доработать
         if ((this->viewMultilineText.getGlobalBounds().height * this->amountLines * 1.45f) >= this->getSize().y)
         {
             --newSize;
@@ -90,7 +89,6 @@ void my_gui::MultilineTextArea::setSize(sf::Vector2f size)
 
     for (int i = 0; i < this->text.getSize(); ++i)
     {
-
         lineViewString += this->text[i];
 #       define SPACE_IN_VIEW "_"
         this->viewMultilineText.setString(lineViewString + SPACE_IN_VIEW);

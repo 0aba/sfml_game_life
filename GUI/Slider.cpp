@@ -31,7 +31,6 @@ my_gui::Slider::Slider(char *pathFont,
 
     this->setValueMin(minValue);
     this->setValueMax(maxValue);
-    this->setValuePointer(this->minValue);
 }
 
 void my_gui::Slider::loadFont(char* pathFont)
@@ -106,9 +105,12 @@ void my_gui::Slider::setValueMin(int value)
 }
 int my_gui::Slider::getValueMin() const { return this->minValue; }
 
-void my_gui::Slider::setValuePointer(int value)
+void my_gui::Slider::setOnlyValuePointer(int value)
 {
     this->value = value;
+    if (this->getValuesPointer() <= this->getValueMin()) { this->value = this->getValueMin(); }
+    else if (this->getValuesPointer() >= this->getValueMax()) { this->value = this->getValueMax(); }
+
     this->textPopup.setString(std::to_string(this->getValuesPointer()));
 }
 int my_gui::Slider::getValuesPointer() const { return this->value; }

@@ -28,6 +28,8 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWid
                                                    Game::MIN_VALUE_LIVING,
                                                    Game::MAX_VALUE_LIVING
     );
+    this->sliderAlivePercent->setValuePointer(Game::DEFAULT_LIVING);
+
     this->titleWall.setFont(this->font);
     this->titleWall.setCharacterSize(15);
     this->titleWall.setString("Wall Percent");
@@ -49,6 +51,8 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWid
                                                   Game::MIN_VALUE_SPECIAL_CELL,
                                                   Game::MAX_VALUE_SPECIAL_CELL
     );
+    this->sliderWallPercent->setValuePointer(Game::DEFAULT_SPECIAL_CELL);
+
     this->titleSupport.setFont(this->font);
     this->titleSupport.setCharacterSize(15);
     this->titleSupport.setString("Support Percent");
@@ -70,6 +74,8 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWid
                                                      Game::MIN_VALUE_SPECIAL_CELL,
                                                      Game::MAX_VALUE_SPECIAL_CELL
     );
+    this->sliderSupportPercent->setValuePointer(Game::DEFAULT_SPECIAL_CELL);
+
     this->titleKilling.setFont(this->font);
     this->titleKilling.setCharacterSize(15);
     this->titleKilling.setString("Killing Percent");
@@ -91,6 +97,7 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWid
                                                      Game::MIN_VALUE_SPECIAL_CELL,
                                                      Game::MAX_VALUE_SPECIAL_CELL
     );
+    this->sliderKillingPercent->setValuePointer(Game::DEFAULT_SPECIAL_CELL);
 
     this->titleAmountX.setFont(this->font);
     this->titleAmountX.setCharacterSize(15);
@@ -113,6 +120,7 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWid
                                                      GameWidget::MIN_SIZE_SIDE,
                                                      GameWidget::MAX_SIZE_SIDE
     );
+    this->sliderAmountX->setValuePointer(Game::DEFAULT_SIDE_SIZE);
 
     this->titleAmountY.setFont(this->font);
     this->titleAmountY.setCharacterSize(15);
@@ -135,6 +143,7 @@ SettingsPage::SettingsPage(sf::RenderWindow* window, TypePage* pageView, GameWid
                                                      GameWidget::MIN_SIZE_SIDE,
                                                      GameWidget::MAX_SIZE_SIDE
     );
+    this->sliderAmountY->setValuePointer(Game::DEFAULT_SIDE_SIZE);
 
     this->backButton = new my_gui::Button(*this->getWindow(),
                                           sf::Vector2f (200, 50),

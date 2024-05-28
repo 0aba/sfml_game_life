@@ -4,11 +4,7 @@
 #include "./pages/SettingsPage.hpp"
 #include "./pages/GamePage.hpp"
 
-#include "game_logic/Game.hpp"
 
-//////
-#include <iostream>
-#include "./GUI/MultilineTextArea.hpp"
 int main()
 {
      sf::RenderWindow window(sf::VideoMode(800, 700), "game life");

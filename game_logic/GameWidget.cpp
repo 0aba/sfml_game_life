@@ -382,9 +382,9 @@ void GameWidget::checkOnEvent(sf::Event event)
 
         this->selectedCellCoord = Coords {(u16) x, (u16) y};
 
-        if (y >= 0 && y <= this->amountCellOnX
+        if (y >= 0 && y <= this->amountCellOnY
             &&
-            x >= 0 && x <= this->amountCellOnY
+            x >= 0 && x <= this->amountCellOnX
             )
         {
             this->selected = true;
@@ -398,9 +398,9 @@ void GameWidget::checkOnEvent(sf::Event event)
              event.mouseButton.button == sf::Mouse::Left
             )
     {
-        if (y >= 0 && y <= this->amountCellOnX
+        if (y >= 0 && y <= this->amountCellOnY
             &&
-            x >= 0 && x <= this->amountCellOnY
+            x >= 0 && x <= this->amountCellOnX
             &&
             (this->contextMenuCell->getPosition().y > sf::Mouse::getPosition(*this->getWindow()).y
              ||
