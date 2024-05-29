@@ -83,7 +83,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                             GameWidget::MAX_SLIDER_VALUE
     );
     this->contextMenuCell->createElement(nullptr,
-                                         "./resources_GUI/dead_cell.png",
+                                         (char *) "./resources_GUI/dead_cell.png",
                                          nullptr,
                                          "dead cell",
                                          this,
@@ -94,7 +94,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          sf::Color(200, 200, 200)
     );
     this->contextMenuCell->createElement(nullptr,
-                                         "./resources_GUI/wall_cell.png",
+                                         (char *) "./resources_GUI/wall_cell.png",
                                          nullptr,
                                          "wall cell",
                                          this,
@@ -105,7 +105,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          sf::Color(200, 200, 200)
     );
     this->contextMenuCell->createElement(nullptr,
-                                         "./resources_GUI/killing_cell.png",
+                                         (char *) "./resources_GUI/killing_cell.png",
                                          nullptr,
                                          "killing cell",
                                          this,
@@ -116,7 +116,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          sf::Color(200, 200, 200)
     );
     this->contextMenuCell->createElement(nullptr,
-                                         "./resources_GUI/support_cell.png",
+                                         (char *) "./resources_GUI/support_cell.png",
                                          nullptr,
                                          "support cell",
                                          this,
@@ -127,7 +127,7 @@ GameWidget::GameWidget(sf::RenderWindow* window,
                                          sf::Color(200, 200, 200)
     );
     this->contextMenuCell->createElement(nullptr,
-                                         "./resources_GUI/living_cell.png",
+                                         (char *) "./resources_GUI/living_cell.png",
                                          nullptr,
                                          "live cell",
                                          this,
@@ -141,27 +141,27 @@ GameWidget::GameWidget(sf::RenderWindow* window,
     this->livingCell = new Cell(*this->getWindow(),
                                 sf::Vector2f (1, 1),
                                 sf::Vector2f (1, 1),
-                                "./resources_GUI/living_cell.png"
+                                (char *) "./resources_GUI/living_cell.png"
                                 );
     this->deadCell = new Cell(*this->getWindow(),
                               sf::Vector2f (1, 1),
                               sf::Vector2f (1, 1),
-                              "./resources_GUI/dead_cell.png"
+                              (char *) "./resources_GUI/dead_cell.png"
                               );
     this->wall = new Cell(*this->getWindow(),
                           sf::Vector2f (0, 0),
                           sf::Vector2f (0, 0),
-                          "./resources_GUI/wall_cell.png"
+                          (char *) "./resources_GUI/wall_cell.png"
                           );
     this->killingCell = new Cell(*this->getWindow(),
                                  sf::Vector2f (0, 0),
                                  sf::Vector2f (0, 0),
-                                 "./resources_GUI/killing_cell.png"
+                                 (char *) "./resources_GUI/killing_cell.png"
                                  );
     this->lifeSupportCell = new Cell(*this->getWindow(),
                                      sf::Vector2f (0, 0),
                                      sf::Vector2f (0, 0),
-                                     "./resources_GUI/support_cell.png"
+                                     (char *) "./resources_GUI/support_cell.png"
                                      );
 
     ((GameWidget*) this)->setSize(size);
@@ -182,18 +182,18 @@ void GameWidget::clickButtonGame(my_gui::OBJECT_GUI* contextCalled, my_gui::Butt
     }
     else /*if (!this->gameRunStatus)*/
     {
-        ((GameWidget*) contextCalled)->runDeveloperLife = new std::jthread([] (const std::stop_token& token, my_gui::OBJECT_GUI* contextCalled) {
+        ((GameWidget*) contextCalled)->runDeveloperLife = new std::jthread([] (const std::stop_token& token, my_gui::OBJECT_GUI& contextCalled) {
             while (true)
             {
                 if (token.stop_requested()) { return; }
 
-                std::this_thread::sleep_for(std::chrono::milliseconds (((GameWidget*) contextCalled)->sliderSpeed->getValuesPointer()));
+                std::this_thread::sleep_for(std::chrono::milliseconds (((GameWidget&) contextCalled).sliderSpeed->getValuesPointer()));
 
-                ((GameWidget*) contextCalled)->gameMutex.lock();
-                ((GameWidget*) contextCalled)->game->developmentOfLife();
-                ((GameWidget*) contextCalled)->gameMutex.unlock();
+                ((GameWidget&) contextCalled).gameMutex.lock();
+                ((GameWidget&) contextCalled).game->developmentOfLife();
+                ((GameWidget&) contextCalled).gameMutex.unlock();
             }
-        }, std::ref(contextCalled));
+        }, std::ref(*contextCalled));
 
         ((my_gui::Button*) thisButton)->setText("stop");
         ((GameWidget*) contextCalled)->gameRunStatus = true;

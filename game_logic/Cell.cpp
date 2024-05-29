@@ -4,7 +4,7 @@
 Cell::Cell(sf::RenderWindow& window,
            sf::Vector2f size,
            sf::Vector2f position,
-           char *pathCellTexture)
+           char* pathCellTexture)
 {
     this->setWindow(window);
 
