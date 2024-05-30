@@ -35,6 +35,7 @@ int main()
         {
             if (event.type == sf::Event::Closed)
             {
+                gamePage.getPtrOnGameWidget()->breakGame();
                 window.close();
             }
             else if (event.type == sf::Event::Resized)

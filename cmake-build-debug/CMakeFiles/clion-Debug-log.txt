@@ -1,5 +1,5 @@
 "D:\program\CLion\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/program/CLion/CLion 2023.3.4/bin/ninja/win/x64/ninja.exe" -G Ninja -S C:\Users\aba\Desktop\game_life -B C:\Users\aba\Desktop\game_life\cmake-build-debug
 -- Found SFML 2.6.1 in D:/Utils/SFML-2.6.1/lib/cmake/SFML
--- Configuring done (0.3s)
--- Generating done (0.1s)
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
 -- Build files have been written to: C:/Users/aba/Desktop/game_life/cmake-build-debug
